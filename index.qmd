@@ -1,0 +1,104 @@
+---
+output: html_document
+editor:
+    mode: source
+editor_options: 
+  chunk_output_type: console
+---
+
+# Introduction {.unnumbered}
+
+The contents of this website comprise the notes for a workshop on best practices for using [eBird](https://ebird.org/home) data and [eBird Status](https://science.ebird.org/en/status-and-trends) data products presented to [Red de Observadores de Aves y Vida Silvestre de Chile (ROC)](https://www.redobservadores.cl/). The workshop is divided into three lessons covering:
+
+1. [eBird Data](ebird.qmd): introduction to the eBird Reference Dataset (ERD), challenges associated with using eBird data for analysis, and best practices for preparing eBird data for modeling.
+2. [Modeling Relative Abundance](abundance.qmd): best practices for using eBird data to model encounter rate, count, and relative abundance for a species.
+3. [eBird Status Data Products](ebirdst.qmd): downloading eBird Status data products, loading the data into R, and using them for a variety of applications.
+
+## Setup {#intro-setup}
+
+This workshop is intended to be interactive. All examples are written in the R programming language, and the instructor will work through the examples in real time, while the attendees are encouraged following along by writing the same code. To ensure we can avoid any unnecessary delays, please follow these setup instructions prior to the workshop
+
+1. [Request access](https://ebird.org/data/download) to raw eBird data.
+2. [Request access](https://science.ebird.org/en/status-and-trends/download-data) to the eBird Status data products.
+3. [Download](https://cloud.r-project.org/) and install the latest version of R. **You must have R version 4.0.0 or newer to follow along with this workshop**
+4. [Download](https://posit.co/download/rstudio-desktop/#download) and install the latest version of RStudio. RStudio is not required for this workshop; however, the instructors will be using and you may find it easier to following along if you're working in the same environment.
+5. The lessons in this workshop use a variety of R packages. To install all the necessary packages, run the following code
+
+```{r}
+#| label: intro-setup-packages
+#| eval: false
+if (!requireNamespace("remotes", quietly = TRUE)) {
+  install.packages("remotes")
+}
+remotes::install_github("ebird/ebird-best-practices")
+```
+
+6. Ensure all packages are updated to their most recent versions by clicking on the Update button on the Packages tab in RStudio.
+
+## Data {#intro-data}
+
+To follow along with the lessons in the workshop you'll need to download the workshop data package. This data package contains a variety of datasets used throughout the three lessons. You should have received an email with a link to a Google Drive folder containing all the data. Download all files in the folder, [create a new RStudio project](https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects), and place all the downloaded files in the `data/` subdirectory of the project.
+
+## Tidyverse {#intro-tidyverse}
+
+Throughout this book, we use packages from the [Tidyverse](https://www.tidyverse.org/), an opinionated collection of R packages designed for data science. Packages such as [`ggplot2`](https://ggplot2.tidyverse.org/), for data visualization, and [`dplyr`](https://dplyr.tidyverse.org/), for data manipulation, are two of the most well known Tidyverse packages; however, there are many more. We’ll try to explain any functions as they come up; however, for a good general resource on working with data in R using the Tidyverse see the free online book [R for Data Science](https://r4ds.hadley.nz/) by [Hadley Wickham](https://hadley.nz/).
+
+The one piece of the Tidyverse that we will cover up front is the pipe operator `%>%`. The pipe takes the expression to the left of it and "pipes" it into the first argument of the expression on the right.
+
+```{r}
+#| label: intro-tidyverse-pipe
+library(dplyr)
+
+# without pipe
+mean(1:10)
+
+# with pipe
+1:10 %>% mean()
+```
+
+The pipe makes code significantly more readable by avoiding nested function calls, reducing the need for intermediate variables, and making sequential operations read left-to-right. For example, to add a new variable to a data frame, then summarize using a grouping variable, the following are equivalent:
+
+```{r}
+#| label: intro-tidyverse-dplyr
+# intermediate variables
+mtcars_kg <- mutate(mtcars, wt_kg = 454 * wt)
+mtcars_grouped <- group_by(mtcars_kg, cyl)
+summarize(mtcars_grouped, wt_kg = mean(wt_kg))
+
+# nested function calls
+summarize(
+  group_by(
+    mutate(mtcars, wt_kg = 454 * wt),
+    cyl
+  ),
+  wt_kg = mean(wt_kg)
+)
+
+# pipes
+mtcars %>% 
+  mutate(wt_kg = 454 * wt) %>% 
+  group_by(cyl) %>% 
+  summarize(wt_kg = mean(wt_kg))
+```
+
+::: {.callout-note icon=false}
+## Exercise
+Rewrite the following code using pipes:
+
+```{r}
+#| label: intro-tidyverse-ex
+set.seed(1)
+round(log(runif(10, min = 0.5)), 1)
+```
+:::
+
+::: {.callout-tip icon=false collapse="true"}
+## Solution
+```{r}
+#| label: intro-tidyverse-sol
+set.seed(1)
+runif(10, min = 0.5) %>% 
+  log() %>% 
+  round(digits = 1)
+```
+:::

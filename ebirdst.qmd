@@ -1,0 +1,13 @@
+---
+output: html_document
+editor:
+    mode: source
+editor_options: 
+  chunk_output_type: console
+---
+
+# eBird Status Data Products {#sec-ebirdst}
+
+As an example, we'll consider observations of [Chucao Tapaculo](https://ebird.org/species/chutap1) in January and February from the Chilean regions Araucanía, Los Ríos, and Los Lagos.
+
+![© Veronica Araya Garcia, Macaulay Library asset 88260681](images/chutap1_Veronica-Araya-Garcia_88260681.jpg)

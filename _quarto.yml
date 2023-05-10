@@ -1,0 +1,46 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "eBird Best Practices Workshop (ROC)"
+  chapters:
+    - index.qmd
+    - ebird.qmd
+    - abundance.qmd
+    - ebirdst.qmd
+
+  editor:
+    mode: source
+
+  page-footer:
+    left: "eBird Best Practices Workshop (ROC)"
+  site-url: https://ebird.github.io/ebird-workshop-roc/
+  repo-url: https://github.com/ebird/roc-ebird-workshop-roc/
+  repo-branch: main
+  repo-actions: [edit, issue]
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    author-meta: "Matthew Strimas-Mackey, Tom Auer"
+
+knitr:
+  opts_chunk:
+    comment: "#>"
+    collapse: true
+    cache: false
+    warn: false
+    error: false
+    message: false
+    out.width: "\\textwidth"
+    fig.align: "center"
+    fig.show: "hold"
+    cache.path: "cache/"
+    R.options:
+      digits: 3
+      knitr.kable.NA: ""
+      dplyr.print_min: 6
+      dplyr.print_max: 6
