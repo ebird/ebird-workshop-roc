@@ -38,6 +38,9 @@ library(scam)
 library(sf)
 library(terra)
 
+# set seed for reproducibility
+set.seed(1)
+
 # detections
 observations <- read_parquet("data/ebird_observations_chile_2021.parquet") %>% 
   filter(species_code == "chutap1") %>% 
@@ -661,18 +664,18 @@ plot(r_plot,
 # borders
 plot(ne_state_lines, col = "#ffffff", lwd = 0.75, add = TRUE)
 plot(ne_country_lines, col = "#ffffff", lwd = 1.5, add = TRUE)
-plot(study_region, border = "#000000", col = NA, lwd = 1, add = TRUE)
+plot(study_region_proj, border = "#000000", col = NA, lwd = 1, add = TRUE)
 box()
 
 # legend
 image.plot(zlim = c(0, 1), legend.only = TRUE,
            col = pal, breaks = seq(0, 1, length.out = length(brks)),
-           smallplot = c(0.90, 0.92, 0.25, 0.75),
+           smallplot = c(0.88, 0.90, 0.2, 0.8),
            horizontal = FALSE,
            axis.args = list(at = c(0, 0.5, 1), labels = lbls,
                             fg = "black", col.axis = "black",
-                            cex.axis = 2, lwd.ticks = 0),
+                            cex.axis = 0.75, lwd.ticks = 0.5),
            legend.args = list(text = "Chucao Tapaculo Relative Abundance",
                               side = 2, col = "black",
-                              cex = 3, line = 2))
+                              cex = 1, line = 0))
 ```
