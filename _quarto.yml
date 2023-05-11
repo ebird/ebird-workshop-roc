@@ -16,7 +16,7 @@ book:
   page-footer:
     left: "eBird Best Practices Workshop (ROC)"
   site-url: https://ebird.github.io/ebird-workshop-roc/
-  repo-url: https://github.com/ebird/roc-ebird-workshop-roc/
+  repo-url: https://github.com/ebird/ebird-workshop-roc/
   repo-branch: main
   repo-actions: [edit, issue]
 

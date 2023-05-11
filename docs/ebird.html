@@ -149,7 +149,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div class="sidebar-title mb-0 py-0">
       <a href="./">eBird Best Practices Workshop (ROC)</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/ebird/roc-ebird-workshop-roc/" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/ebird/ebird-workshop-roc/" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
 </div>
     </div>
       </div>
@@ -194,7 +194,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#sec-ebird-pred" id="toc-sec-ebird-pred" class="nav-link" data-scroll-target="#sec-ebird-pred"><span class="toc-section-number">1.3</span>  Prediction grid</a></li>
   <li><a href="#sec-ebird-sampling" id="toc-sec-ebird-sampling" class="nav-link" data-scroll-target="#sec-ebird-sampling"><span class="toc-section-number">1.4</span>  Case controlled grid sampling</a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/ebird/roc-ebird-workshop-roc/edit/main/ebird.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/ebird/roc-ebird-workshop-roc/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/ebird/ebird-workshop-roc/edit/main/ebird.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/ebird/ebird-workshop-roc/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -696,13 +696,13 @@ Solution
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(chutap1_zf)</span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 186906</span></span>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(chutap1_sampled)</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 77277</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 77032</span></span>
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co"># how has prevalence changed</span></span>
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(chutap1_zf<span class="sc">$</span>detected)</span>
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.0518</span></span>
 <span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(chutap1_sampled<span class="sc">$</span>detected)</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.0732</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.0735</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>So, after sampling, we’re left with 41% of the observations we started with, but the spatial and temporal bias has been significantly reduced.</p>
 <p>We now have the data and tools necessary to model relative abundance using eBird data, which will be the focus of <a href="abundance.html">Lesson&nbsp;<span>2</span></a>.</p>
