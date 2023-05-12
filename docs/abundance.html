@@ -292,7 +292,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>For the final filtering step, we’ll use spatial boundaries included in the data package to subset observations to only those from Araucanía, Los Ríos, and Los Lagos.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>study_region <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/gis-data.gpkg"</span>, <span class="st">"ne_states"</span>) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>study_region <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/gis-data.gpkg"</span>, <span class="at">layer =</span> <span class="st">"ne_states"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(state_code <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"CL-AR"</span>, <span class="st">"CL-LR"</span>, <span class="st">"CL-LL"</span>))</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># subset to regions of interest</span></span>
@@ -659,7 +659,7 @@ Checkpoint
 </div>
 </div>
 <p>The most important predictors of detection/non-detection are often effort variables. Indeed, that’s the case here: checklist duration, distance traveled, and start time (<code>hours_of_day</code>) all appear in the top 5 predictors. This is not surprising: going out at the right time of day and expending more effort searching will lead to a higher probability of detecting Wood Thrush. Focusing on the habitat variables, both elevation variables have high importance, and the top habitat variables are from deciduous broadleaf forest and woody savanna. Note however, that high importance doesn’t tell us the direction of the relationship with detection, for that we’ll have to look at partial dependence plots.</p>
-<div class="callout-note callout callout-style-default no-icon callout-captioned">
+<div class="callout-caution callout callout-style-default no-icon callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
@@ -672,7 +672,7 @@ Exercise
 <p>Look up the predictor names in <code>ebirdst_predictors</code> to see what habitat types these variables correspond to. Based on your knowledge of the species, does it make sense that these habitat types are important?</p>
 </div>
 </div>
-<div class="callout-tip callout callout-style-default no-icon callout-captioned">
+<div class="callout-note callout callout-style-default no-icon callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>

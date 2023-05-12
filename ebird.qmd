@@ -53,6 +53,7 @@ filter(ebirdst_predictors, predictor == "mcd12q1_lccs1_fs_c12_1500_pland") %>%
 
 ::: {.callout-important}
 ## Checkpoint
+
 Take some time to explore the variables in the checklist dataset. Try looking up a variable in `ebirst_predictors`. Ask for help if you need clarification on the meaning of any of the variables.
 :::
 
@@ -171,12 +172,13 @@ par(new = TRUE, mar = c(0, 0, 3, 0))
 title("Chucao Tapaculo eBird Observations\nJune 2007-2021")
 ```
 
-::: {.callout-note icon=false}
+::: {.callout-caution icon=false}
 ## Exercise
+
 Try producing zero-filled, detection/non-detection data for another species.
 :::
 
-::: {.callout-tip icon=false collapse="true"}
+::: {.callout-note icon=false collapse="true"}
 ## Solution
 
 For example, to produce detection/non-detection data for [Thorn-tailed Rayadito](https://ebird.org/species/thtray1) use:

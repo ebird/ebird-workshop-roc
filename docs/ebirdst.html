@@ -21,6 +21,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -121,7 +184,33 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-ebirdst-access" id="toc-sec-ebirdst-access" class="nav-link active" data-scroll-target="#sec-ebirdst-access"><span class="toc-section-number">3.1</span>  Data access</a></li>
+  <li><a href="#sec-ebirdst-species" id="toc-sec-ebirdst-species" class="nav-link" data-scroll-target="#sec-ebirdst-species"><span class="toc-section-number">3.2</span>  Status and Trends species</a>
+  <ul class="collapse">
+  <li><a href="#sec-ebirdst-review" id="toc-sec-ebirdst-review" class="nav-link" data-scroll-target="#sec-ebirdst-review"><span class="toc-section-number">3.2.1</span>  Expert review</a></li>
+  </ul></li>
+  <li><a href="#sec-ebirdst-download" id="toc-sec-ebirdst-download" class="nav-link" data-scroll-target="#sec-ebirdst-download"><span class="toc-section-number">3.3</span>  Downloading data</a>
+  <ul class="collapse">
+  <li><a href="#sec-ebirdst-download-specific" id="toc-sec-ebirdst-download-specific" class="nav-link" data-scroll-target="#sec-ebirdst-download-specific"><span class="toc-section-number">3.3.1</span>  Downloading specific files</a></li>
+  </ul></li>
+  <li><a href="#sec-ebirdst-load" id="toc-sec-ebirdst-load" class="nav-link" data-scroll-target="#sec-ebirdst-load"><span class="toc-section-number">3.4</span>  Loading data in R</a>
+  <ul class="collapse">
+  <li><a href="#sec-ebirdst-load-weekly" id="toc-sec-ebirdst-load-weekly" class="nav-link" data-scroll-target="#sec-ebirdst-load-weekly"><span class="toc-section-number">3.4.1</span>  Weekly raster estimates</a></li>
+  <li><a href="#sec-ebirdst-load-seasonal" id="toc-sec-ebirdst-load-seasonal" class="nav-link" data-scroll-target="#sec-ebirdst-load-seasonal"><span class="toc-section-number">3.4.2</span>  Seasonal raster estimates</a></li>
+  </ul></li>
+  <li><a href="#sec-ebirdst-explore" id="toc-sec-ebirdst-explore" class="nav-link" data-scroll-target="#sec-ebirdst-explore"><span class="toc-section-number">3.5</span>  Exploring the raster data</a></li>
+  <li><a href="#sec-ebirdst-applications" id="toc-sec-ebirdst-applications" class="nav-link" data-scroll-target="#sec-ebirdst-applications"><span class="toc-section-number">3.6</span>  Applications</a>
+  <ul class="collapse">
+  <li><a href="#sec-ebirdst-applications-trajectories" id="toc-sec-ebirdst-applications-trajectories" class="nav-link" data-scroll-target="#sec-ebirdst-applications-trajectories"><span class="toc-section-number">3.6.1</span>  Trajectories</a></li>
+  <li><a href="#sec-ebirdst-applications-stats" id="toc-sec-ebirdst-applications-stats" class="nav-link" data-scroll-target="#sec-ebirdst-applications-stats"><span class="toc-section-number">3.6.2</span>  Regional statistics</a></li>
+  <li><a href="#sec-ebirdst-applications-prioritization" id="toc-sec-ebirdst-applications-prioritization" class="nav-link" data-scroll-target="#sec-ebirdst-applications-prioritization"><span class="toc-section-number">3.6.3</span>  Prioritization</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/ebird/ebird-workshop-roc/edit/main/ebirdst.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/ebird/ebird-workshop-roc/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -143,15 +232,819 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>As an example, we’ll consider observations of <a href="https://ebird.org/species/chutap1">Chucao Tapaculo</a> in January and February from the Chilean regions Araucanía, Los Ríos, and Los Lagos.</p>
+<p>The <a href="https://science.ebird.org/en/status-and-trends">eBird Status and Trends</a> project uses full-annual cycle machine-learning models combining eBird data with remote-sensing data and accounting for variation in observer behavior and effort to produce high resolution, weekly estimates of range boundaries, occurrence rate, and relative abundance of bird species. The latest version, with estimates for the year 2021, includes results for 2,282 species globally. Interactive visualizations for these species are available through the <a href="https://science.ebird.org/en/status-and-trends">eBird Status and Trends website</a> and the eBird Status Data Products are available through the R package <a href="https://ebird.github.io/ebirdst/"><code>ebirdst</code></a>.</p>
+<p>This workshop will introduce attendees to the eBird Status Data Products and the <code>ebirdst</code> R package developed specifically for working with these data. We will introduce attendees to the range of available data, then demonstrate how to download these data products and load them into R for further analysis. Next we’ll work through a series of applications. Let’s start by loading the packages we’ll use throughout this workshop.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ebirdst)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(exactextractr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forcats)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="sec-ebirdst-access" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="sec-ebirdst-access"><span class="header-section-number">3.1</span> Data access</h2>
+<p>Access to the eBird Status Data Products is granted through an Access Request Form at: https://ebird.org/st/request. The terms of use have been desiged to be quite permissive in many cases, particularly academic and research use. After reading the <a href="https://ebird.org/science/status-and-trends/st-data-access-terms-of-use/">eBird Status and Trends Products Terms of Use</a> and filling out the <a href="https://ebird.org/st/request">Access Request Form</a> you will be provided with an alphanumeric access key. To store the access key so it can be accessed by R and the <code>ebirdst</code> package, run the following (replacing <code>"XXXXXXXXX"</code> with your actual key):</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set_ebirdst_access_key</span>(<span class="st">"XXXXXXXXX"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Then immediately <strong>restart R</strong>. This will save the access key as the environment variable <code>EBIRDST_KEY</code> in your <code>.Renviron</code> file so it’s accessible within your R session.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Checkpoint
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To ensure you’re data access key is working, attempt run the following code, which will download a single small file. Speak to the instructor if this doesn’t work.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ebirdst_download</span>(<span class="st">"grbfir1"</span>, <span class="at">pattern =</span> <span class="st">"abundance_median_lr_2021"</span>, <span class="at">force =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-ebirdst-species" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="sec-ebirdst-species"><span class="header-section-number">3.2</span> Status and Trends species</h2>
+<p>The <code>ebirdst_runs</code> object is a data frame listing all the available species.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(ebirdst_runs)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Rows: 2,282</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Columns: 23</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ species_code                         &lt;chr&gt; "grerhe1", "higtin1", "gretin1", …</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ scientific_name                      &lt;chr&gt; "Rhea americana", "Nothocercus bo…</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ common_name                          &lt;chr&gt; "Greater Rhea", "Highland Tinamou…</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ resident                             &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRU…</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ breeding_quality                     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ breeding_range_modeled               &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ breeding_start                       &lt;date&gt; NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ breeding_end                         &lt;date&gt; NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ nonbreeding_quality                  &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ nonbreeding_range_modeled            &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ nonbreeding_start                    &lt;date&gt; NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ nonbreeding_end                      &lt;date&gt; NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ postbreeding_migration_quality       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ postbreeding_migration_range_modeled &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ postbreeding_migration_start         &lt;date&gt; NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ postbreeding_migration_end           &lt;date&gt; NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ prebreeding_migration_quality        &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ prebreeding_migration_range_modeled  &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ prebreeding_migration_start          &lt;date&gt; NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ prebreeding_migration_end            &lt;date&gt; NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ resident_quality                     &lt;chr&gt; "2", "1", "2", "3", "3", "2", "2"…</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ resident_start                       &lt;date&gt; 2021-01-04, 2021-01-04, 2021-01-…</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ resident_end                         &lt;date&gt; 2021-12-28, 2021-12-28, 2021-12-…</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If you’re working in RStudio, you can use <code>View()</code> to interactively explore this data frame. You can also consult the <a href="https://science.ebird.org/en/status-and-trends/species">Status and Trends species page</a> the full list of available species. On this page you can also filter by region, for example to see only those species with some portion of their range <a href="https://science.ebird.org/en/status-and-trends/species?regionCode=CL">falling within Chile</a>.</p>
+<p>We’ve included a set of regional statistics for Chile and the regions of Chile in the data package provided for this workshop. We can use these statistics to identify which of the 2,882 Status and Trends species occur in Chile.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>regional_stats <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/ebirdst-2021_regional-stats_chile.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For example, we could use this to see which Status and Trends species have at least 1% of population within Chile or whose range covers at least 5% of Chile for at least one season.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>chile_runs <span class="ot">&lt;-</span> regional_stats <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(region_code <span class="sc">==</span> <span class="st">"CL"</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>         percent_population <span class="sc">&gt;</span> <span class="fl">0.01</span> <span class="sc">|</span> percent_region_occupied <span class="sc">&gt;</span> <span class="fl">0.05</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(species_code) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(ebirdst_runs, <span class="at">by =</span> <span class="st">"species_code"</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(chile_runs)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 110</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This leaves us with 110 species.</p>
+<section id="sec-ebirdst-review" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="sec-ebirdst-review"><span class="header-section-number">3.2.1</span> Expert review</h3>
+<p>All species go through a process of expert human review prior to being released. The <code>ebirdst_runs</code> data frame also contains information from this review process. Reviewers assess each of the four seasons: breeding, non-breeding, pre-breeding migration, and post-breeding migration. Resident (i.e., non-migratory) species are identified by having <code>TRUE</code> in the <code>resident</code> column of <code>ebirdst_runs</code>, and these species are assessed across the whole year rather than seasonally. <code>ebirdst_runs</code> contains two important pieces of information for each season: a <strong>quality</strong> rating and <strong>seasonal dates</strong>.</p>
+<p>The <strong>seasonal dates</strong> define the weeks that fall within each season; these relative abundance estimates for these weeks get averaged to produce the seasonal relative abundance maps on the Status and Trends website. Breeding and non-breeding season dates are defined for each species as the weeks during those seasons when the species’ population does not move. For this reason, these seasons are also described as stationary periods. Migration periods are defined as the periods of movement between the stationary non-breeding and breeding seasons. Note that for many species these migratory periods include not only movement from breeding grounds to non-breeding grounds, but also post-breeding dispersal, molt migration, and other movements.</p>
+<p>Reviewers also examine the model estimates for each season to assess the amount of extrapolation or omission present in the model, and assign an associated quality rating ranging from 0 (lowest quality) to 3 (highest quality). Extrapolation refers to cases where the model predicts occurrence where the species is known to be absent, while omission refers to the model failing to predict occurrence where a species is known to be present.</p>
+<p>A rating of 0 implies this season failed review and model results should not be used at all for this period. Ratings of 1-3 correspond to a gradient of more to less extrapolation and/or omission, and we often use a traffic light analogy when referring to them:</p>
+<ol type="1">
+<li><span style="color:#f20a02"><strong>Red light (1)</strong></span>: low quality, extensive extrapolation and/or omission and noise, but at least some regions have estimates that are accurate; can be used with caution in certain regions.</li>
+<li><span style="color:#f2ea49"><strong>Yellow light (2)</strong></span>: medium quality, some extrapolation and/or omission; use with caution.</li>
+<li><span style="color:#00cc25"><strong>Green light (3)</strong></span>: high quality, very little or no extrapolation and/or omission; these seasons can be safely used.</li>
+</ol>
+<div class="callout-caution callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Look up a species of interest to you. Identify the seasonal dates and the review quality ratings.</p>
+</div>
+</div>
+<div class="callout-note callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Green-backed Firecrown is coded as a migrant with all four seasons receiving quality ratings of 2 suggesting that there may be some extrapolation or omission.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>chile_runs <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(common_name <span class="sc">==</span> <span class="st">"Green-backed Firecrown"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Rows: 1</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Columns: 23</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ species_code                         &lt;chr&gt; "grbfir1"</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ scientific_name                      &lt;chr&gt; "Sephanoides sephaniodes"</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ common_name                          &lt;chr&gt; "Green-backed Firecrown"</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ resident                             &lt;lgl&gt; FALSE</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ breeding_quality                     &lt;chr&gt; "2"</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ breeding_range_modeled               &lt;chr&gt; "TRUE"</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ breeding_start                       &lt;date&gt; 2021-11-23</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ breeding_end                         &lt;date&gt; 2021-04-26</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ nonbreeding_quality                  &lt;chr&gt; "2"</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ nonbreeding_range_modeled            &lt;chr&gt; "TRUE"</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ nonbreeding_start                    &lt;date&gt; 2021-06-14</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ nonbreeding_end                      &lt;date&gt; 2021-08-31</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ postbreeding_migration_quality       &lt;chr&gt; "2"</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ postbreeding_migration_range_modeled &lt;chr&gt; "TRUE"</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ postbreeding_migration_start         &lt;date&gt; 2021-05-03</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ postbreeding_migration_end           &lt;date&gt; 2021-06-07</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ prebreeding_migration_quality        &lt;chr&gt; "2"</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ prebreeding_migration_range_modeled  &lt;chr&gt; "TRUE"</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ prebreeding_migration_start          &lt;date&gt; 2021-09-07</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ prebreeding_migration_end            &lt;date&gt; 2021-11-16</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ resident_quality                     &lt;chr&gt; NA</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ resident_start                       &lt;date&gt; NA</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ resident_end                         &lt;date&gt; NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="sec-ebirdst-download" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="sec-ebirdst-download"><span class="header-section-number">3.3</span> Downloading data</h2>
+<p>The function <code>ebirdst_download()</code> downloads data for a single species given a species name (common name, scientific name, or species code). For example, to download the data for Green-backed Firecrown use:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="fu">ebirdst_download</span>(<span class="at">species =</span> <span class="st">"Green-backed Firecrown"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>path</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<pre><code>#&gt; [1] "/Users/mes335/data/ebirdst/2021/grbfir1"</code></pre>
+</div>
+<p>The function will automatically identify a suitable location to store the downloaded data and return that path, which we captured in the variable <code>path</code>. We can see which files were downloaded with:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(path, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] "config.json"                                                   </span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [2] "ranges/grbfir1_range_raw_lr_2021.gpkg"                         </span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [3] "ranges/grbfir1_range_raw_mr_2021.gpkg"                         </span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [4] "ranges/grbfir1_range_smooth_lr_2021.gpkg"                      </span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [5] "ranges/grbfir1_range_smooth_mr_2021.gpkg"                      </span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [6] "regional_stats.csv"                                            </span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [7] "seasonal/band-seasons.csv"                                     </span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [8] "seasonal/grbfir1_abundance_full-year_max_hr_2021.tif"          </span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [9] "seasonal/grbfir1_abundance_full-year_max_lr_2021.tif"          </span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [10] "seasonal/grbfir1_abundance_full-year_max_mr_2021.tif"          </span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [11] "seasonal/grbfir1_abundance_full-year_mean_hr_2021.tif"         </span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [12] "seasonal/grbfir1_abundance_full-year_mean_lr_2021.tif"         </span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [13] "seasonal/grbfir1_abundance_full-year_mean_mr_2021.tif"         </span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [14] "seasonal/grbfir1_abundance_seasonal_max_hr_2021.tif"           </span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [15] "seasonal/grbfir1_abundance_seasonal_max_lr_2021.tif"           </span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [16] "seasonal/grbfir1_abundance_seasonal_max_mr_2021.tif"           </span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [17] "seasonal/grbfir1_abundance_seasonal_mean_hr_2021.tif"          </span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [18] "seasonal/grbfir1_abundance_seasonal_mean_lr_2021.tif"          </span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [19] "seasonal/grbfir1_abundance_seasonal_mean_mr_2021.tif"          </span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [20] "seasonal/grbfir1_count_full-year_max_hr_2021.tif"              </span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [21] "seasonal/grbfir1_count_full-year_max_lr_2021.tif"              </span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [22] "seasonal/grbfir1_count_full-year_max_mr_2021.tif"              </span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [23] "seasonal/grbfir1_count_full-year_mean_hr_2021.tif"             </span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [24] "seasonal/grbfir1_count_full-year_mean_lr_2021.tif"             </span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [25] "seasonal/grbfir1_count_full-year_mean_mr_2021.tif"             </span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [26] "seasonal/grbfir1_count_seasonal_max_hr_2021.tif"               </span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [27] "seasonal/grbfir1_count_seasonal_max_lr_2021.tif"               </span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [28] "seasonal/grbfir1_count_seasonal_max_mr_2021.tif"               </span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [29] "seasonal/grbfir1_count_seasonal_mean_hr_2021.tif"              </span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [30] "seasonal/grbfir1_count_seasonal_mean_lr_2021.tif"              </span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [31] "seasonal/grbfir1_count_seasonal_mean_mr_2021.tif"              </span></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [32] "seasonal/grbfir1_occurrence_full-year_max_hr_2021.tif"         </span></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [33] "seasonal/grbfir1_occurrence_full-year_max_lr_2021.tif"         </span></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [34] "seasonal/grbfir1_occurrence_full-year_max_mr_2021.tif"         </span></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [35] "seasonal/grbfir1_occurrence_full-year_mean_hr_2021.tif"        </span></span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [36] "seasonal/grbfir1_occurrence_full-year_mean_lr_2021.tif"        </span></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [37] "seasonal/grbfir1_occurrence_full-year_mean_mr_2021.tif"        </span></span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [38] "seasonal/grbfir1_occurrence_seasonal_max_hr_2021.tif"          </span></span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [39] "seasonal/grbfir1_occurrence_seasonal_max_lr_2021.tif"          </span></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [40] "seasonal/grbfir1_occurrence_seasonal_max_mr_2021.tif"          </span></span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [41] "seasonal/grbfir1_occurrence_seasonal_mean_hr_2021.tif"         </span></span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [42] "seasonal/grbfir1_occurrence_seasonal_mean_lr_2021.tif"         </span></span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [43] "seasonal/grbfir1_occurrence_seasonal_mean_mr_2021.tif"         </span></span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [44] "seasonal/grbfir1_percent-population_full-year_max_hr_2021.tif" </span></span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [45] "seasonal/grbfir1_percent-population_full-year_max_lr_2021.tif" </span></span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [46] "seasonal/grbfir1_percent-population_full-year_max_mr_2021.tif" </span></span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [47] "seasonal/grbfir1_percent-population_full-year_mean_hr_2021.tif"</span></span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [48] "seasonal/grbfir1_percent-population_full-year_mean_lr_2021.tif"</span></span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [49] "seasonal/grbfir1_percent-population_full-year_mean_mr_2021.tif"</span></span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [50] "seasonal/grbfir1_percent-population_seasonal_max_hr_2021.tif"  </span></span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [51] "seasonal/grbfir1_percent-population_seasonal_max_lr_2021.tif"  </span></span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [52] "seasonal/grbfir1_percent-population_seasonal_max_mr_2021.tif"  </span></span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [53] "seasonal/grbfir1_percent-population_seasonal_mean_hr_2021.tif" </span></span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [54] "seasonal/grbfir1_percent-population_seasonal_mean_lr_2021.tif" </span></span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [55] "seasonal/grbfir1_percent-population_seasonal_mean_mr_2021.tif" </span></span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [56] "weekly/band-dates.csv"                                         </span></span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [57] "weekly/grbfir1_abundance_lower_hr_2021.tif"                    </span></span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [58] "weekly/grbfir1_abundance_lower_lr_2021.tif"                    </span></span>
+<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [59] "weekly/grbfir1_abundance_lower_mr_2021.tif"                    </span></span>
+<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [60] "weekly/grbfir1_abundance_median_hr_2021.tif"                   </span></span>
+<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [61] "weekly/grbfir1_abundance_median_lr_2021.tif"                   </span></span>
+<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [62] "weekly/grbfir1_abundance_median_mr_2021.tif"                   </span></span>
+<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [63] "weekly/grbfir1_abundance_upper_hr_2021.tif"                    </span></span>
+<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [64] "weekly/grbfir1_abundance_upper_lr_2021.tif"                    </span></span>
+<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [65] "weekly/grbfir1_abundance_upper_mr_2021.tif"                    </span></span>
+<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [66] "weekly/grbfir1_centroids.csv"                                  </span></span>
+<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [67] "weekly/grbfir1_count_median_hr_2021.tif"                       </span></span>
+<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [68] "weekly/grbfir1_count_median_lr_2021.tif"                       </span></span>
+<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [69] "weekly/grbfir1_count_median_mr_2021.tif"                       </span></span>
+<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [70] "weekly/grbfir1_occurrence_median_hr_2021.tif"                  </span></span>
+<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [71] "weekly/grbfir1_occurrence_median_lr_2021.tif"                  </span></span>
+<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [72] "weekly/grbfir1_occurrence_median_mr_2021.tif"                  </span></span>
+<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [73] "weekly/grbfir1_percent-population_median_hr_2021.tif"          </span></span>
+<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [74] "weekly/grbfir1_percent-population_median_lr_2021.tif"          </span></span>
+<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [75] "weekly/grbfir1_percent-population_median_mr_2021.tif"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Within this data package directory, the files are organized according to the following structure:</p>
+<ul>
+<li><code>weekly/</code>: a directory containing weekly estimates of occurrence, count, relative abundance, and percent of population on a regular grid in GeoTIFF format at three resolutions. See below for more details.</li>
+<li><code>seasonal/</code>: a directory containing seasonal estimates of occurrence, count, relative abundance, and percent of population on a regular grid in GeoTIFF format at three resolutions. These are derived from the corresponding weekly raster data. Dates defining the boundary of each season are set on a species-specific basis by an expert reviewer familiar with the species. These dates are available in the ebirdst_runs data frame. Only seasons that passed the expert review process are included. See below for more details.</li>
+<li><code>ranges/</code>: a directory containing GeoPackages storing range boundary polygons. See below for more details.</li>
+<li><code>config.json</code>: run-specific parameters, mostly for internal use, but also containing useful parameters for mapping the abundance data.</li>
+</ul>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Spatial data fall into two broad categories: raster data and vector data. <strong>Raster</strong> data represents spatial data as a regular grid of cells with a value or set of values assigned to each. <strong>Vector</strong> data represents spatial data as discrete points, lines, or polygons. In the eBird Status data products, raster data are distributed as GeoTIFFs, while vector data are distributed as GeoPackages.</p>
+</div>
+</div>
+<p>For a species whose data have already been downloaded, you can use <code>get_species_path("Green-backed Firecrown")</code> to identify the path to the data.</p>
+<section id="sec-ebirdst-download-specific" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="sec-ebirdst-download-specific"><span class="header-section-number">3.3.1</span> Downloading specific files</h3>
+<p>The full data package for each species contains a large number of files, many of which may be unnecessary for your application. You can use the <code>dry_run = TRUE</code> argument to <code>ebirdst_download()</code> to list the available files without downloading them.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ebirdst_download</span>(<span class="st">"Green-backed Firecrown"</span>, <span class="at">dry_run =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Then, once you’ve identified the files you want, you can use the <code>pattern</code> argument to download only those files. For example, imagine we only want the <code>abundance</code> files:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ebirdst_download</span>(<span class="st">"Green-backed Firecrown"</span>, <span class="at">pattern =</span> <span class="st">"abundance"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To avoid any issues resulting from all participants downloading data over a slow internet connection at the same time, for the remainder of this lesson we’ll use data included in the <a href="index.html#sec-intro-data">data package for this workshop</a>. These data packages should be in the <code>data/ebirst-data/</code> subdirectory of your RStudio project. To find the path to the data for a particular species using a non-standard download location, use</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="fu">get_species_path</span>(<span class="st">"Green-backed Firecrown"</span>, <span class="at">path =</span> <span class="st">"data/ebirdst-data/"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>path</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "data/ebirdst-data//2021/grbfir1"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>However, when working with eBird Status data products after this workshop, it’s best to use the standard download location and skip adding <code>path = "data/ebirdst-data/"</code>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="sec-ebirdst-load" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="sec-ebirdst-load"><span class="header-section-number">3.4</span> Loading data in R</h2>
+<p>In this workshop, we’ll focus on the raster data products, which can all be loaded into R using the <code>ebirdst</code> function <code>load_raster()</code>. In R, we’ll use the <code>terra</code> package to work with raster data. Raster data products fall into two broad categories providing weekly and seasonal estimates.</p>
+<section id="sec-ebirdst-load-weekly" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="sec-ebirdst-load-weekly"><span class="header-section-number">3.4.1</span> Weekly raster estimates</h3>
+<p>The core raster data products are the weekly estimates of occurrence, count, relative abundance, and percent of population. All estimates are the median expected value for a 1km, 1 hour eBird Traveling Count by an expert eBird observer at the optimal time of day and for optimal weather conditions to observe the given species.</p>
+<ul>
+<li><strong>Occurrence</strong> <code>occurrence</code>: the expected probability of encountering a species.</li>
+<li><strong>Count</strong> <code>count</code>: the expected count of a species, conditional on its occurrence at the given location.</li>
+<li><strong>Relative abundance</strong> <code>abundance</code>: the expected relative abundance of a species, computed as the product of the probability of occurrence and the count conditional on occurrence. In addition to the median relative abundance, upper and lower confidence intervals (CIs) are provided, defined at the 10th and 90th quantile of relative abundance, respectively.</li>
+<li><strong>Percent of population</strong> <code>precent-population</code>: the proportion of the total relative abundance within each cell. This is a derived product calculated by dividing each cell value in the relative abundance raster by the sum of all cell values</li>
+</ul>
+<p>All predictions are made on a standard 2.96km x 2.96km global grid, however, for convenience lower resolution GeoTIFFs are also provided, which are typically much faster to work with. The three resolutions are:</p>
+<ul>
+<li>High resolution (<code>hr</code>): the native 2.96 km resolution data</li>
+<li>Medium resolution (<code>mr</code>): the <code>hr</code> data aggregated by a factor of 3 in each direction resulting in a resolution of 8.89 km</li>
+<li>Low resolution (<code>lr</code>): the <code>hr</code> data aggregated by a factor of 9 in each direction resulting in a resolution of 26.7 km</li>
+</ul>
+<p>The weekly cubes use the following naming convention:</p>
+<p><code>weekly/&lt;species_code&gt;_&lt;product&gt;_&lt;metric&gt;_&lt;resolution&gt;_&lt;year&gt;.tif</code></p>
+<p>where <code>metric</code> is typically <code>median</code>, except for the relative abundance CIs, which use <code>lower</code> and <code>upper</code>. The function <code>load_raster()</code> is used to load these data into R and takes arguments for <code>product</code>, <code>metric</code> and <code>resolution</code>. For example, to load the high resolution median relative abundance, use</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>abd_median_hr <span class="ot">&lt;-</span> <span class="fu">load_raster</span>(path, <span class="at">product =</span> <span class="st">"abundance"</span>, <span class="at">resolution =</span> <span class="st">"hr"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(abd_median_hr)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; class       : SpatRaster </span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; dimensions  : 5630, 13511, 52  (nrow, ncol, nlyr)</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; resolution  : 2963, 2963  (x, y)</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; extent      : -2e+07, 2e+07, -6673060, 1e+07  (xmin, xmax, ymin, ymax)</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; coord. ref. : +proj=sinu +lon_0=0 +x_0=0 +y_0=0 +R=6371007.181 +units=m +no_defs </span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; source      : grbfir1_abundance_median_hr_2021.tif </span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; names       : 2021-01-04, 2021-01-11, 2021-01-18, 2021-01-25, 2021-02-01, 2021-02-08, ... </span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; min values  :       0.00,        0.0,       0.00,       0.00,       0.00,        0.0, ... </span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; max values  :       4.19,        4.9,       4.23,       4.13,       4.84,        5.4, ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We often refer to these raster objects as “weekly cubes” (e.g.&nbsp;the “weekly abundance cube”). Notice that the cubes contains 52 layers, corresponding to the weeks of the year. We can use the function <code>parse_raster_dates()</code> to see the dates associated with each layer.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parse_raster_dates</span>(abd_median_hr)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] "2021-01-04" "2021-01-11" "2021-01-18" "2021-01-25" "2021-02-01"</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [6] "2021-02-08" "2021-02-15" "2021-02-22" "2021-03-01" "2021-03-08"</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [11] "2021-03-15" "2021-03-22" "2021-03-29" "2021-04-05" "2021-04-12"</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [16] "2021-04-19" "2021-04-26" "2021-05-03" "2021-05-10" "2021-05-17"</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [21] "2021-05-24" "2021-05-31" "2021-06-07" "2021-06-14" "2021-06-21"</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [26] "2021-06-28" "2021-07-06" "2021-07-13" "2021-07-20" "2021-07-27"</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [31] "2021-08-03" "2021-08-10" "2021-08-17" "2021-08-24" "2021-08-31"</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [36] "2021-09-07" "2021-09-14" "2021-09-21" "2021-09-28" "2021-10-05"</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [41] "2021-10-12" "2021-10-19" "2021-10-26" "2021-11-02" "2021-11-09"</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [46] "2021-11-16" "2021-11-23" "2021-11-30" "2021-12-07" "2021-12-14"</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [51] "2021-12-21" "2021-12-28"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>As another example, we could load the low resolution upper and lower abundance confidence intervals.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>abd_lower_lr <span class="ot">&lt;-</span> <span class="fu">load_raster</span>(path, <span class="at">product =</span> <span class="st">"abundance"</span>, <span class="at">metric =</span> <span class="st">"lower"</span>, </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">resolution =</span> <span class="st">"lr"</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>abd_upper_lr <span class="ot">&lt;-</span> <span class="fu">load_raster</span>(path, <span class="at">product =</span> <span class="st">"abundance"</span>, <span class="at">metric =</span> <span class="st">"upper"</span>, </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">resolution =</span> <span class="st">"lr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout-caution callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Try loading the weekly median percent of population cube at medium resolution.</p>
+</div>
+</div>
+<div class="callout-note callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pct_pop <span class="ot">&lt;-</span> <span class="fu">load_raster</span>(path, <span class="at">product =</span> <span class="st">"percent-population"</span>, <span class="at">metric =</span> <span class="st">"median"</span>, </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">resolution =</span> <span class="st">"mr"</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(pct_pop)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; class       : SpatRaster </span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; dimensions  : 1877, 4504, 52  (nrow, ncol, nlyr)</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; resolution  : 8888, 8888  (x, y)</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; extent      : -2e+07, 2e+07, -6676023, 1e+07  (xmin, xmax, ymin, ymax)</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; coord. ref. : +proj=sinu +lon_0=0 +x_0=0 +y_0=0 +R=6371007.181 +units=m +no_defs </span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; source      : grbfir1_percent-population_median_mr_2021.tif </span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; names       : 2021-01-04, 2021-01-11, 2021-01-18, 2021-01-25, 2021-02-01, 2021-02-08, ... </span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; min values  :    0.00000,     0.0000,    0.00000,    0.00000,    0.00000,    0.00000, ... </span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; max values  :    0.00105,     0.0011,    0.00104,    0.00133,    0.00143,    0.00151, ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-ebirdst-load-seasonal" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="sec-ebirdst-load-seasonal"><span class="header-section-number">3.4.2</span> Seasonal raster estimates</h3>
+<p>The seasonal raster estimates are provided for the same set of products and at the same three resolutions as the weekly estimates. They’re derived from the weekly data by taking the cell-wise mean or max across the weeks within each season. Recall that the seasonal boundary dates are available in the data frame <code>ebirdst_runs</code>; data is not provided for seasons with a quality score of 0.</p>
+<p>The seasonal GeoTIFFs use the following naming convention:</p>
+<p><code>seasonal/&lt;species_code&gt;_&lt;product&gt;_seasonal_&lt;metric&gt;_&lt;resolution&gt;_&lt;year&gt;.tif</code></p>
+<p>where <code>metric</code> is either <code>mean</code> or <code>max</code>. The function <code>load_raster(period = "seasonal")</code> is used to load these data into R and takes arguments for <code>product</code>, <code>metric</code> and <code>resolution</code>. For example, to load the low resolution mean seasonal relative abundance, use</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>abd_seasonal_mean <span class="ot">&lt;-</span> <span class="fu">load_raster</span>(path, <span class="at">product =</span> <span class="st">"abundance"</span>, </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">period =</span> <span class="st">"seasonal"</span>, <span class="at">metric =</span> <span class="st">"mean"</span>, </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">resolution =</span> <span class="st">"lr"</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(abd_seasonal_mean)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; class       : SpatRaster </span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; dimensions  : 626, 1502, 4  (nrow, ncol, nlyr)</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; resolution  : 26665, 26665  (x, y)</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; extent      : -2e+07, 2e+07, -6684911, 1e+07  (xmin, xmax, ymin, ymax)</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; coord. ref. : +proj=sinu +lon_0=0 +x_0=0 +y_0=0 +R=6371007.181 +units=m +no_defs </span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; source      : grbfir1_abundance_seasonal_mean_lr_2021.tif </span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; names       : breeding, nonbreeding, prebree~gration, postbre~gration </span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; min values  :     0.00,        0.00,            0.00,             0.0 </span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; max values  :     2.39,        3.04,            1.98,             3.4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Notice there are four layers in this raster corresponding to the four seasons.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(abd_seasonal_mean)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "breeding"               "nonbreeding"            "prebreeding_migration" </span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [4] "postbreeding_migration"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Finally, as a convenience, the data products include year-round rasters summarizing the mean or max across all weeks that fall within a season that passed the expert review process. These can be accessed similarly to the seasonal products, just with <code>period = "full-year"</code> instead. For example, these layers can be used in conservation planning to assess the most important sites across the full range and full annual cycle of a species.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>abd_fy_max <span class="ot">&lt;-</span> <span class="fu">load_raster</span>(path, <span class="at">product =</span> <span class="st">"abundance"</span>, </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">period =</span> <span class="st">"full-year"</span>, <span class="at">metric =</span> <span class="st">"max"</span>, </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">resolution =</span> <span class="st">"hr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="sec-ebirdst-explore" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="sec-ebirdst-explore"><span class="header-section-number">3.5</span> Exploring the raster data</h2>
+<p>Let’s load the low resolution weekly and seasonal relative abundance cubes and use them to demonstrate some basic raster operations with the data.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>abd_weekly <span class="ot">&lt;-</span> <span class="fu">load_raster</span>(path, <span class="at">product =</span> <span class="st">"abundance"</span>, <span class="at">resolution =</span> <span class="st">"mr"</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>abd_seasonal <span class="ot">&lt;-</span> <span class="fu">load_raster</span>(path, <span class="at">product =</span> <span class="st">"abundance"</span>, <span class="at">period =</span> <span class="st">"seasonal"</span>, </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">resolution =</span> <span class="st">"mr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>These cubes can easily be subset to a single week or season.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># week of may 17</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>abd_weekly[[<span class="st">"2021-05-17"</span>]]</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; class       : SpatRaster </span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; dimensions  : 1877, 4504, 1  (nrow, ncol, nlyr)</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; resolution  : 8888, 8888  (x, y)</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; extent      : -2e+07, 2e+07, -6676023, 1e+07  (xmin, xmax, ymin, ymax)</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; coord. ref. : +proj=sinu +lon_0=0 +x_0=0 +y_0=0 +R=6371007.181 +units=m +no_defs </span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; source      : grbfir1_abundance_median_mr_2021.tif </span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; name        : 2021-05-17 </span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; min value   :       0.00 </span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; max value   :       4.11</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="co"># breeding season</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>abd_seasonal[[<span class="st">"breeding"</span>]]</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; class       : SpatRaster </span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; dimensions  : 1877, 4504, 1  (nrow, ncol, nlyr)</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; resolution  : 8888, 8888  (x, y)</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; extent      : -2e+07, 2e+07, -6676023, 1e+07  (xmin, xmax, ymin, ymax)</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; coord. ref. : +proj=sinu +lon_0=0 +x_0=0 +y_0=0 +R=6371007.181 +units=m +no_defs </span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; source      : grbfir1_abundance_seasonal_mean_mr_2021.tif </span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; name        : breeding </span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; min value   :     0.00 </span></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; max value   :     2.73</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can also subset the weekly cube to a range of weeks. For example, let’s subset to only the estimates for weeks in may, then take the average across the weeks.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># determine which dates we want to include</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>week_dates <span class="ot">&lt;-</span> <span class="fu">parse_raster_dates</span>(abd_weekly)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>start_date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">"2021-05-01"</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>end_date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">"2021-05-31"</span>)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>week_in_may <span class="ot">&lt;-</span> week_dates <span class="sc">&gt;=</span> start_date <span class="sc">&amp;</span> week_dates <span class="sc">&lt;=</span> end_date</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co"># subset to weeks in may</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>abd_weekly_may <span class="ot">&lt;-</span> abd_weekly[[week_in_may]]</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co"># average across weeks</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(abd_weekly_may, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; class       : SpatRaster </span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; dimensions  : 1877, 4504, 1  (nrow, ncol, nlyr)</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; resolution  : 8888, 8888  (x, y)</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; extent      : -2e+07, 2e+07, -6676023, 1e+07  (xmin, xmax, ymin, ymax)</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; coord. ref. : +proj=sinu +lon_0=0 +x_0=0 +y_0=0 +R=6371007.181 +units=m +no_defs </span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; source(s)   : memory</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; name        : mean </span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; min value   : 0.00 </span></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; max value   : 4.09</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Making a simple map of the data will produce unexpected results. For example, let’s map the breeding season relative abundance for Green-backed Firecrown.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(abd_seasonal[[<span class="st">"breeding"</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/chutap1_Veronica-Araya-Garcia_88260681.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">© Veronica Araya Garcia, Macaulay Library asset 88260681</figcaption><p></p>
+<p><img src="ebirdst_files/figure-html/ebirdst-explore-map-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
+</div>
+</div>
+<p>Recall that all eBird Status data products are provided for the entire globe regardless of the range of the species. Also, notice that some areas, such as most of the Amazon Basin, have missing values indicating that there was insufficient data to make a prediction in the region. Other areas, such as North America, had sufficient data to predict that the species is absent. Let’s try using the GIS data included in the workshop data package to crop the raster to the Chilean region of Los Lagos to make a more meaningful map.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># los lagos boundary, projected to match the raster data</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>los_lagos <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/gis-data.gpkg"</span>,  <span class="at">layer =</span> <span class="st">"ne_states"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">"Los Lagos"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="fu">crs</span>(abd_seasonal)) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_geometry</span>()</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co"># crop raster data to chile</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>abd_breeding_ll <span class="ot">&lt;-</span> <span class="fu">crop</span>(abd_seasonal[[<span class="st">"breeding"</span>]], los_lagos)</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="co"># map</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(abd_breeding_ll)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(los_lagos, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ebirdst_files/figure-html/ebirdst-explore-chilemap-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Checkpoint
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let’s take a break before proceeding onto some more realistic applications of the eBird Status data products. Make sure you’re comfortable loading the data into R and performing some of the basic operations.</p>
+</div>
+</div>
+</section>
+<section id="sec-ebirdst-applications" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="sec-ebirdst-applications"><span class="header-section-number">3.6</span> Applications</h2>
+<p>The remainder of the workshop will work through three example applications using the eBird Status data products:</p>
+<ol type="1">
+<li><a href="#sec-ebirdst-applications-trajectories">Trajectories</a>: chart the change in relative abundance and percent of population for a single species throughout the year for a specific location.</li>
+<li><a href="#sec-ebirdst-applications-stats">Regional statistics</a>: calculate the proportion of the breeding population falling within protected areas for a set of species.</li>
+<li><a href="#sec-ebirdst-applications-prioritization">Prioritization</a>: use eBird Status data products to identify important sites for protection of a set of species.</li>
+</ol>
+<section id="sec-ebirdst-applications-trajectories" class="level3" data-number="3.6.1">
+<h3 data-number="3.6.1" class="anchored" data-anchor-id="sec-ebirdst-applications-trajectories"><span class="header-section-number">3.6.1</span> Trajectories</h3>
+<p>In this application, we’ll look at the change in Green-backed Firecrown abundance throughout the year in Los Lagos, Chile. Let’s start by loading the medium resolution weekly relative abundance cubes (median and confidence intervals) as well as a boundary polygon for Los Lagos.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># relative abundance cubes, median and confidence intervals</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="fu">get_species_path</span>(<span class="st">"grbfir1"</span>, <span class="at">path =</span> <span class="st">"data/ebirdst-data/"</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>abd_median <span class="ot">&lt;-</span> <span class="fu">load_raster</span>(path, <span class="at">metric =</span> <span class="st">"median"</span>, <span class="at">resolution =</span> <span class="st">"mr"</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>abd_lower <span class="ot">&lt;-</span> <span class="fu">load_raster</span>(path, <span class="at">metric =</span> <span class="st">"lower"</span>, <span class="at">resolution =</span> <span class="st">"mr"</span>)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>abd_upper <span class="ot">&lt;-</span> <span class="fu">load_raster</span>(path, <span class="at">metric =</span> <span class="st">"upper"</span>, <span class="at">resolution =</span> <span class="st">"mr"</span>)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co"># los lagos boundary, projected to match the raster data</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>los_lagos <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/gis-data.gpkg"</span>, <span class="st">"ne_states"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">"Los Lagos"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="fu">crs</span>(abd_seasonal)) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_geometry</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, we’ll use the R package <code>exactextractr</code> to calculate the mean value for each layer within Los Lagos.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mean abundance within los lagos</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>median_traj <span class="ot">&lt;-</span> <span class="fu">exact_extract</span>(abd_median, los_lagos, <span class="at">fun =</span> <span class="st">"mean"</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>lower_traj <span class="ot">&lt;-</span> <span class="fu">exact_extract</span>(abd_lower, los_lagos, <span class="at">fun =</span> <span class="st">"mean"</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>upper_traj <span class="ot">&lt;-</span> <span class="fu">exact_extract</span>(abd_upper, los_lagos, <span class="at">fun =</span> <span class="st">"mean"</span>)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co"># combine median, lower, and upper together</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>trajectory <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">week =</span> <span class="fu">parse_raster_dates</span>(abd_median),</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">median =</span> <span class="fu">as.numeric</span>(median_traj[<span class="dv">1</span>, ]),</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">lower =</span> <span class="fu">as.numeric</span>(lower_traj[<span class="dv">1</span>, ]),</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">upper =</span> <span class="fu">as.numeric</span>(upper_traj[<span class="dv">1</span>, ]))</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(trajectory)</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         week median lower upper</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 2021-01-04  0.766 0.729 0.807</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 2021-01-11  0.859 0.818 0.900</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 2021-01-18  0.946 0.907 0.989</span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 2021-01-25  1.015 0.971 1.061</span></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 2021-02-01  1.091 1.045 1.138</span></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 2021-02-08  1.182 1.130 1.237</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we can plot the trajectories with confidence intervals.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(trajectory, <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> median)) <span class="sc">+</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lower, <span class="at">ymax =</span> upper), <span class="at">alpha =</span> <span class="fl">0.3</span>)<span class="sc">+</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Week"</span>, </span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Mean relative abundance"</span>,</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Weekly Green-backed Firecrown trajectory in Las Lagos"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ebirdst_files/figure-html/ebirdst-applications-trajectories-plot-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-ebirdst-applications-stats" class="level3" data-number="3.6.2">
+<h3 data-number="3.6.2" class="anchored" data-anchor-id="sec-ebirdst-applications-stats"><span class="header-section-number">3.6.2</span> Regional statistics</h3>
+<p>For this application, we’ll identify the mean relative abundance and proportion of the population for a set of species in protected areas in Chile. For a species group we’ll use the top 10 species with the largest proportion of their population falling in Chile. We can identify these species using the regional statistics file we loaded in <a href="#sec-ebirdst-species"><span>Section&nbsp;3.2</span></a>. For migratory species we’ll consider the percent of the breeding population and for resident species we’ll consider the percent of the year round population.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>species_list <span class="ot">&lt;-</span> regional_stats <span class="sc">%&gt;%</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(region_code <span class="sc">==</span> <span class="st">"CL"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(season_code <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"breeding"</span>, <span class="st">"year_round"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species_code, percent_population) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(percent_population)) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="co"># add common names, migrant/resident status, and quality</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>species_list <span class="ot">&lt;-</span> species_list <span class="sc">%&gt;%</span> </span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(ebirdst_runs, <span class="at">by =</span> <span class="st">"species_code"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">quality =</span> <span class="fu">ifelse</span>(resident, resident_quality, breeding_quality)) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species_code, common_name, resident, quality, percent_population)</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(species_list)</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 10 × 5</span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   species_code common_name                 resident quality percent_population</span></span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;                       &lt;lgl&gt;    &lt;chr&gt;                &lt;dbl&gt;</span></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 cthhue1      Chestnut-throated Huet-huet TRUE     3                    0.999</span></span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 chipig2      Chilean Pigeon              TRUE     3                    0.989</span></span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 chimoc1      Chilean Mockingbird         TRUE     1                    0.979</span></span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 grbfir1      Green-backed Firecrown      FALSE    2                    0.963</span></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 chutap1      Chucao Tapaculo             TRUE     3                    0.918</span></span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 pattyr2      Patagonian Tyrant           FALSE    2                    0.868</span></span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 4 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We’re left with two migrants and 8 resident species, each with at least 75% of their populations falling within Chile. Notice that 2 of these species have quality ratings of 1 indicating that caution should be exercised when using the results. For real world use you should examine the relative abundance maps for errors prior to using them for analysis; however, for this example, we’ll use this species list as is. We’ll load and combine the breeding (for migrants) and resident (for residents) percent of population layers for this list of species. Data for all 10 of these species has been included in the workshop data package.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Relative abundance estimates are impacted by detection rates, which can vary between species. As a results, when comparing eBird Status and Trends data across species, it’s critical to always use the percent of population layers, which have been standardized by dividing each cell value by the total relative abundance across all cells.</p>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># loop over the species list extracting the seasonal percent of population</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>percent_population <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="fu">nrow</span>(species_list))) {</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># load the seasonal cube for this species</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  this_species <span class="ot">&lt;-</span> species_list[i, ]</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  pop <span class="ot">&lt;-</span> <span class="fu">get_species_path</span>(this_species<span class="sc">$</span>species_code, </span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>                          <span class="at">path =</span> <span class="st">"data/ebirdst-data/"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">load_raster</span>(<span class="st">"percent-population"</span>, <span class="at">period =</span> <span class="st">"seasonal"</span>, <span class="at">resolution =</span> <span class="st">"mr"</span>)</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># subset to the layer we need: breeding or resident</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  pop <span class="ot">&lt;-</span> pop[[<span class="fu">ifelse</span>(this_species<span class="sc">$</span>resident, <span class="st">"resident"</span>, <span class="st">"breeding"</span>)]]</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>  percent_population[[this_species<span class="sc">$</span>species_code]] <span class="ot">&lt;-</span> pop</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="co"># stack the rasters into a single object</span></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>percent_population <span class="ot">&lt;-</span> <span class="fu">rast</span>(percent_population)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The GIS data available in the workshop data package contains polygon boundaries for public protected areas in Chile, let’s load them now and project to match the raster layers. For this example, we’ll combine all the protected area polygons together into one feature; however, this analysis could be modified to consider how the distribution of species varies between protected areas.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>protected <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/gis-data.gpkg"</span>,  <span class="at">layer =</span> <span class="st">"protected_areas"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_combine</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="fu">crs</span>(percent_population))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Finally, we can use <code>exactextracr</code> to calculate the total percent of population within protected areas for each species.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>percent_protected <span class="ot">&lt;-</span> <span class="fu">exact_extract</span>(percent_population, protected, <span class="at">fun =</span> <span class="st">"sum"</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>percent_protected <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(percent_protected[<span class="dv">1</span>, ])</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>percent_protected <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">species_code =</span> species_list<span class="sc">$</span>species_code,</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>                                <span class="at">common_name =</span> species_list<span class="sc">$</span>common_name,</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>                                <span class="at">percent_population =</span> percent_protected) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(percent_population))</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(percent_protected)</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    species_code                 common_name percent_population</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1       pattyr2           Patagonian Tyrant            0.25141</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2       thtray1       Thorn-tailed Rayadito            0.21774</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3       chutap1             Chucao Tapaculo            0.18595</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4       auspar1            Austral Parakeet            0.17797</span></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5       grbfir1      Green-backed Firecrown            0.15287</span></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6       strwoo6          Striped Woodpecker            0.13066</span></span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7       chifli1             Chilean Flicker            0.12446</span></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8       chipig2              Chilean Pigeon            0.07358</span></span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9       cthhue1 Chestnut-throated Huet-huet            0.03652</span></span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10      chimoc1         Chilean Mockingbird            0.00682</span></span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the data</span></span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(percent_protected) <span class="sc">+</span></span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_reorder</span>(common_name, percent_population),</span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> percent_population) <span class="sc">+</span></span>
+<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Percent of population in protected areas"</span>) <span class="sc">+</span></span>
+<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ebirdst_files/figure-html/ebirdst-applications-ee-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-ebirdst-applications-prioritization" class="level3" data-number="3.6.3">
+<h3 data-number="3.6.3" class="anchored" data-anchor-id="sec-ebirdst-applications-prioritization"><span class="header-section-number">3.6.3</span> Prioritization</h3>
+<p>For the final application, we’ll perform a multi-species site prioritization exercise, identifying important sites for protecting the set of 10 near-endemic species we identified in the previous application. Let’s start by generating a multi-species importance layer by calculating the mean percent of population across all 10 species. Since we’re focused on identifying sites in Chile, we’ll also crop and mask the importance layer to a boundary of Chile.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># boundary of chile</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>chile <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/gis-data.gpkg"</span>, <span class="at">layer =</span> <span class="st">"ne_states"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="fu">crs</span>(percent_population))</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co"># importance: mean percent of population across species</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="co"># fill missing values with zeros prior to averaging</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>importance <span class="ot">&lt;-</span> <span class="fu">ifel</span>(<span class="fu">is.na</span>(percent_population), <span class="dv">0</span>, percent_population) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># crop and mask importance to focus on chile</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">crop</span>(chile) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mask</span>(chile)</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the square root of importance since the data are right skewed</span></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.25</span>, <span class="fl">0.25</span>, <span class="fl">0.25</span>))</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>crs <span class="ot">&lt;-</span> <span class="st">"+proj=laea +lat_0=-40 +lon_0=-72"</span></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>r_plot <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(importance) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">project</span>(crs, <span class="at">method =</span> <span class="st">"near"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">trim</span>()</span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(r_plot, <span class="at">axes =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ebirdst_files/figure-html/ebirdst-applications-prioritization-import-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The absolute numbers in this map are challenging to interpret (they’re the mean proportion of the population across the 10 species in each cell). Instead, the values should be interpreted in relative terms, giving the relative importance of each cell for this set of 10 species.</p>
+<p>In the previous application, we examined existing public protected areas. For the sake of comparison, let’s imagine we want to identify the most important sites in Chile that cover the same area as the existing protected area network. What proportion of chile does the current protected area cover?</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># proportion of chile in existing protected area network</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>area_chile <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">st_area</span>(chile))</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>area_protected <span class="ot">&lt;-</span> <span class="fu">st_area</span>(protected)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>proportion_protected <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(area_protected <span class="sc">/</span> area_chile)</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(proportion_protected)</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.172</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>So, 17.2% of Chile is covered by the existing network of public protected areas. Let’s identify the top 17.2% most important raster cells from the multi-species importance layer.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># identify the quantile corresponding to the desired protection level</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>q <span class="ot">&lt;-</span> <span class="fu">global</span>(importance, <span class="at">fun =</span> quantile, </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">probs =</span> <span class="dv">1</span> <span class="sc">-</span> proportion_protected, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.numeric</span>()</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="co"># identify the most importance cells</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>selected_sites <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(importance <span class="sc">&gt;=</span> q)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s compare maps of the existing protected area network and the sites selected using eBird Status and Trends.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.25</span>, <span class="fl">0.25</span>, <span class="fl">0.25</span>))</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>r_plot <span class="ot">&lt;-</span> <span class="fu">project</span>(selected_sites, crs, <span class="at">method =</span> <span class="st">"near"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">trim</span>()</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>protected_proj <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(protected, <span class="at">crs =</span> crs) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_geometry</span>()</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(r_plot, <span class="at">axes =</span> <span class="cn">FALSE</span>, <span class="at">legend =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="co">#plot(protected_proj, add = TRUE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ebirdst_files/figure-html/ebirdst-applications-prioritization-maps-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The high importance sites identified we identified are shown in green, while the existing protected area network is shown outlined in black. It appears the existing protected area network is mostly in southern Chile and there is limited overlap with areas of high importance to the 10 near-endemic species we chose to focus on. This is not surprising since the location of existing protected areas was not chosen specifically to protect these 10 species. Let’s quantify what proportion of the population these two regions capture.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mask the percent of population layers by the selected sites</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>selected_pp <span class="ot">&lt;-</span> percent_population <span class="sc">%&gt;%</span> </span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">crop</span>(selected_sites) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mask</span>(selected_sites, <span class="at">maskvalues =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="cn">NA</span>))</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate total percent of population within proposed sites</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>percent_selected <span class="ot">&lt;-</span> <span class="fu">global</span>(selected_pp, <span class="at">fun =</span> <span class="st">"sum"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>percent_selected <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">species_code =</span> <span class="fu">names</span>(selected_pp),</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>                               <span class="at">selected_percent =</span> percent_selected[, <span class="dv">1</span>])</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="co"># combine with values for existing network</span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>comparison <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(percent_protected, percent_selected,</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>                         <span class="at">by =</span> <span class="st">"species_code"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">existing_network =</span> percent_population,</span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">prioritized_sites =</span> selected_percent) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(existing_network, prioritized_sites),</span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"network_type"</span>,</span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"percent_population"</span>)</span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the data</span></span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(comparison) <span class="sc">+</span></span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_reorder</span>(common_name, percent_population),</span>
+<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> percent_population,</span>
+<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">group =</span> network_type,</span>
+<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">fill =</span> network_type) <span class="sc">+</span></span>
+<span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb37-26"><a href="#cb37-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb37-27"><a href="#cb37-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
+<span id="cb37-28"><a href="#cb37-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, </span>
+<span id="cb37-29"><a href="#cb37-29" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Percent of population in protected areas"</span>,</span>
+<span id="cb37-30"><a href="#cb37-30" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb37-31"><a href="#cb37-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb37-32"><a href="#cb37-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ebirdst_files/figure-html/ebirdst-applications-prioritization-compare-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>So, for the same total area, we can capture a much larger proportion of the populations of these species if we use eBird Status data products for these species in our site prioritization. This exampel is, of course, overly simplistic. In practices, systematic conservation planning tools like the R package <a href="https://prioritizr.net/"><code>prioritizr</code></a> can perform much more complex prioritizations, accounting for both the spatial and temporal aspects of species distributions, taking advantage of <a href="https://link.springer.com/article/10.1007/BF02704970">site complementarity</a>, allowing for more flexible conservation goals, and accounting for both conservation value and economic cost of sites. eBird Status data products are well suited for use in systematic conservation planning exercises using <code>prioritizr</code>.</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

@@ -14,7 +14,7 @@ The contents of this website comprise the notes for a workshop on best practices
 2. [Modeling Relative Abundance](abundance.qmd): best practices for using eBird data to model encounter rate, count, and relative abundance for a species.
 3. [eBird Status Data Products](ebirdst.qmd): downloading eBird Status data products, loading the data into R, and using them for a variety of applications.
 
-## Setup {#intro-setup}
+## Setup {#sec-intro-setup}
 
 This workshop is intended to be interactive. All examples are written in the R programming language, and the instructor will work through the examples in real time, while the attendees are encouraged following along by writing the same code. To ensure we can avoid any unnecessary delays, please follow these setup instructions prior to the workshop
 
@@ -35,11 +35,11 @@ remotes::install_github("ebird/ebird-best-practices")
 
 6. Ensure all packages are updated to their most recent versions by clicking on the Update button on the Packages tab in RStudio.
 
-## Data {#intro-data}
+## Data {#sec-intro-data}
 
 To follow along with the lessons in the workshop you'll need to download the workshop data package. This data package contains a variety of datasets used throughout the three lessons. You should have received an email with a link to a Google Drive folder containing all the data. Download all files in the folder, [create a new RStudio project](https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects), and place all the downloaded files in the `data/` subdirectory of the project.
 
-## Tidyverse {#intro-tidyverse}
+## Tidyverse {#sec-intro-tidyverse}
 
 Throughout this book, we use packages from the [Tidyverse](https://www.tidyverse.org/), an opinionated collection of R packages designed for data science. Packages such as [`ggplot2`](https://ggplot2.tidyverse.org/), for data visualization, and [`dplyr`](https://dplyr.tidyverse.org/), for data manipulation, are two of the most well known Tidyverse packages; however, there are many more. We’ll try to explain any functions as they come up; however, for a good general resource on working with data in R using the Tidyverse see the free online book [R for Data Science](https://r4ds.hadley.nz/) by [Hadley Wickham](https://hadley.nz/).
 
@@ -81,8 +81,9 @@ mtcars %>%
   summarize(wt_kg = mean(wt_kg))
 ```
 
-::: {.callout-note icon=false}
+::: {.callout-caution icon=false}
 ## Exercise
+
 Rewrite the following code using pipes:
 
 ```{r}
@@ -92,8 +93,9 @@ round(log(runif(10, min = 0.5)), 1)
 ```
 :::
 
-::: {.callout-tip icon=false collapse="true"}
+::: {.callout-note icon=false collapse="true"}
 ## Solution
+
 ```{r}
 #| label: intro-tidyverse-sol
 set.seed(1)
