@@ -28,7 +28,7 @@ library(tidyr)
 
 ## Data access {#sec-ebirdst-access}
 
-Access to the eBird Status Data Products is granted through an Access Request Form at: https://ebird.org/st/request. The terms of use have been desiged to be quite permissive in many cases, particularly academic and research use. After reading the [eBird Status and Trends Products Terms of Use](https://ebird.org/science/status-and-trends/st-data-access-terms-of-use/) and filling out the [Access Request Form](https://ebird.org/st/request) you will be provided with an alphanumeric access key. To store the access key so it can be accessed by R and the `ebirdst` package, run the following (replacing `"XXXXXXXXX"` with your actual key):
+Access to the eBird Status Data Products is granted through an Access Request Form at: [https://ebird.org/st/request](https://ebird.org/st/request). The terms of use have been desiged to be quite permissive in many cases, particularly academic and research use. After reading the [eBird Status and Trends Products Terms of Use](https://ebird.org/science/status-and-trends/st-data-access-terms-of-use/) and filling out the [Access Request Form](https://ebird.org/st/request) you will be provided with an alphanumeric access key. To store the access key so it can be accessed by R and the `ebirdst` package, run the following (replacing `"XXXXXXXXX"` with your actual key):
 
 ```{r}
 #| label: ebirdst-access-key
@@ -52,7 +52,7 @@ ebirdst_download("grbfir1", pattern = "abundance_median_lr_2021", force = TRUE)
 
 ## Status and Trends species {#sec-ebirdst-species}
 
-The `ebirdst_runs` object is a data frame listing all the available species.
+The `ebirdst_runs` object is a data frame listing all the available species:
 
 ```{r species}
 #| label: ebirdst-species-runs
@@ -61,7 +61,7 @@ glimpse(ebirdst_runs)
 
 If you're working in RStudio, you can use `View()` to interactively explore this data frame. You can also consult the [Status and Trends species page](https://science.ebird.org/en/status-and-trends/species) the full list of available species. On this page you can also filter by region, for example to see only those species with some portion of their range [falling within Chile](https://science.ebird.org/en/status-and-trends/species?regionCode=CL).
 
-We've included a set of regional statistics for Chile and the regions of Chile in the data package provided for this workshop. We can use these statistics to identify which of the 2,882 Status and Trends species occur in Chile.
+We've included a set of regional statistics for Chile and the regions of Chile in the data package provided for this workshop. For each species and season, five statistics are provided summarizing the Status and Trends data over each region. We can use these statistics to identify which of the 2,882 Status and Trends species occur in Chile.
 
 ```{r}
 #| label: ebirdst-species-stats
@@ -86,7 +86,7 @@ This leaves us with 110 species.
 
 All species go through a process of expert human review prior to being released. The `ebirdst_runs` data frame also contains information from this review process. Reviewers assess each of the four seasons: breeding, non-breeding, pre-breeding migration, and post-breeding migration. Resident (i.e., non-migratory) species are identified by having `TRUE` in the `resident` column of `ebirdst_runs`, and these species are assessed across the whole year rather than seasonally. `ebirdst_runs` contains two important pieces of information for each season: a **quality** rating and **seasonal dates**.
 
-The **seasonal dates** define the weeks that fall within each season; these relative abundance estimates for these weeks get averaged to produce the seasonal relative abundance maps on the Status and Trends website. Breeding and non-breeding season dates are defined for each species as the weeks during those seasons when the species’ population does not move. For this reason, these seasons are also described as stationary periods. Migration periods are defined as the periods of movement between the stationary non-breeding and breeding seasons. Note that for many species these migratory periods include not only movement from breeding grounds to non-breeding grounds, but also post-breeding dispersal, molt migration, and other movements. 
+The **seasonal dates** define the weeks that fall within each season; the relative abundance estimates for these weeks get averaged to produce the seasonal relative abundance maps on the Status and Trends website. Breeding and non-breeding season dates are defined for each species as the weeks during those seasons when the species’ population does not move. For this reason, these seasons are also described as stationary periods. Migration periods are defined as the periods of movement between the stationary non-breeding and breeding seasons. Note that for many species these migratory periods include not only movement from breeding grounds to non-breeding grounds, but also post-breeding dispersal, molt migration, and other movements. 
 
 Reviewers also examine the model estimates for each season to assess the amount of extrapolation or omission present in the model, and assign an associated quality rating ranging from 0 (lowest quality) to 3 (highest quality). Extrapolation refers to cases where the model predicts occurrence where the species is known to be absent, while omission refers to the model failing to predict occurrence where a species is known to be present.
 
@@ -98,6 +98,7 @@ A rating of 0 implies this season failed review and model results should not be 
 
 ::: {.callout-caution icon=false}
 ## Exercise
+
 Look up a species of interest to you. Identify the seasonal dates and the review quality ratings.
 :::
 
@@ -548,10 +549,10 @@ r_plot <- project(selected_sites, crs, method = "near") %>%
 protected_proj <- st_transform(protected, crs = crs) %>% 
   st_geometry()
 plot(r_plot, axes = FALSE, legend = FALSE)
-#plot(protected_proj, add = TRUE)
+plot(st_simplify(protected_proj), add = TRUE)
 ```
 
-The high importance sites identified we identified are shown in green, while the existing protected area network is shown outlined in black. It appears the existing protected area network is mostly in southern Chile and there is limited overlap with areas of high importance to the 10 near-endemic species we chose to focus on. This is not surprising since the location of existing protected areas was not chosen specifically to protect these 10 species. Let's quantify what proportion of the population these two regions capture.
+The high importance sites we identified are shown in green, while the existing protected area network is shown outlined in black. It appears the existing protected area network is mostly in southern Chile and there is limited overlap with areas of high importance to the 10 near-endemic species we chose to focus on. This is not surprising since the location of existing protected areas was not chosen specifically to protect these 10 species. Let's quantify what proportion of the population these two regions capture.
 
 ```{r}
 #| label: ebirdst-applications-prioritization-compare

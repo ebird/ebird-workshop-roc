@@ -11,17 +11,17 @@ editor_options:
 In this lesson we'll estimate encounter rate and relative abundance using eBird data.
 We define **encounter rate** as the probability of an eBirder encountering a species on a standard eBird checklist and **relative abundance** as the expected number of individuals detected on a standard eBird checklist.
 
-The ecological metrics we're ultimately interested in are probability that a species occurs at a site (i.e. the occupancy probability) and absolute abundance or density of individuals that occur at a site. These quantities are usually not possible to estimate with eBird data because we typically can't estimate *absolute* detectability. We can account for much of the variation in detectability by including effort covariates in our model and choosing a region and season over which we expect detection effects to be constant. If best practices are followed, encounter rate will be proportional to occupancy and relative abundance proportional to absolute abundance.
+The ecological metrics we're ultimately interested in are probability that a species occurs at a site (i.e. the occupancy probability) and absolute abundance or density of individuals that occur at a site. It's usually notpossible to estimate these quantities with eBird data because we typically can't estimate *absolute* detectability. We can account for much of the variation in detectability by including effort variables in our model and choosing a region and season over which we expect detection effects to be constant. If best practices are followed, encounter rate will be proportional to occupancy and relative abundance proportional to absolute abundance.
 
-The relative abundance model used by eBird Status and Trends, and presented here, is a two-step hurdle model. The first step estimates encounter rate and the second step estimates the expected count of individuals on eBird checklists where the species was detected. Then we multiply encounter rate by median count to produce an estimate of relative abundance. Both steps of the hurdle model use random forests.
+The relative abundance model used by eBird Status and Trends, and presented here, is a **two-step hurdle model**. The first step estimates encounter rate and the second step estimates the expected count of individuals on eBird checklists where the species was detected. Then we multiply encounter rate by median count to produce an estimate of relative abundance. Both steps of the hurdle model use random forests.
 
-As an example, we train a relative abundance model useing observations of [Chucao Tapaculo](https://ebird.org/species/chutap1) in January and February from the Chilean regions Araucanía, Los Ríos, and Los Lagos.
+As an example, let's train a relative abundance model using observations of [Chucao Tapaculo](https://ebird.org/species/chutap1) in January and February from the Chilean regions Araucanía, Los Ríos, and Los Lagos.
 
 ![© Veronica Araya Garcia, Macaulay Library (#88260681)](images/chutap1_Veronica-Araya-Garcia_88260681.jpg)
 
 ## Data preparation {#sec-abundance-data}
 
-Let's start by reading the eBird data into R and zero-filling to produce detection/non-detection data for Chucao Tapaculo.
+Let's start by reading the eBird data into R and zero-filling it to produce detection/non-detection data for Chucao Tapaculo.
 
 ```{r}
 #| label: abundance-data-read
@@ -59,7 +59,7 @@ checklists <- read_parquet("data/ebird_checklists_chile_2021.parquet") %>%
   )
 ```
 
-Next let's subset the data to only observations from January and February, summer months during which we expect detectability and habitat associations to be stationary. To reduce variation in detecatbility, we'll also subset the data to only those checklists less than 24 hours in duration and 10km in length, at speeds below 100km/h, and with 10 or fewer observers. Furthermore, we'll only consider data from the past 10 years (2007-2021).
+Next let's subset the data to only observations from January and February, summer months during which we expect detectability and habitat associations to be stationary. To reduce variation in detecatability, we'll also subset the data to only those checklists less than 24 hours in duration and 10km in length, at speeds below 100km/h, and with 10 or fewer observers. Furthermore, we'll only consider data from the past 15 years (2007-2021).
 
 ```{r}
 #| label: abundance-data-filter
@@ -105,13 +105,13 @@ table(checklists$type) / nrow(checklists)
 
 ### Case controlled grid sampling {#sec-abundance-data-sampling}
 
-Following the method outlined in @sec-ebird-sampling, we perform a round of case controlled grid sampling on the data to reduce spatial and temporal bias as well as class imbalance. We can use the `sample_by` argument to `grid_sample_stratified()` to independently sample from the train and test sets to remove bias from both.
+Following the method outlined in @sec-ebird-bias, we perform a round of case controlled grid sampling on the data to reduce spatial and temporal bias as well as class imbalance. We can use the `sample_by` argument to `grid_sample_stratified()` to independently sample from the train and test sets to remove bias from both.
 
 ```{r}
 #| label: abundance-data-sampling
 checklists_sampled <- grid_sample_stratified(checklists,
-                                             sample_by = "type",
-                                             obs_column = "obs_detected")
+                                             obs_column = "obs_detected",
+                                             sample_by = "type")
 ```
 
 How did this impact the prevalence of detections compared to non-detections?
@@ -129,11 +129,11 @@ count(checklists_sampled, obs_detected) %>%
   mutate(percent = n / sum(n))
 ```
 
-So, the case controlled sampling *decreased* the overall number of checklists by a factor , but *increased* the prevalence of detections. This increase in detections will help the random forests model distinguish where birds are being observed; however, this does affect the prevalence rate of the detections in the data. As a result, the estimated encounter rate based on these subsampled data will be larger than the true encounter rate. When examining the outputs from the models it will be important to recall that we altered the prevalence rate at this stage.
+So, the case controlled sampling *decreased* the overall number of checklists by a factor of `r round(nrow(checklists) / nrow(checklists_sampled), 1)`, but *increased* the prevalence of detections. This increase in detections will help the random forests model distinguish where birds are being observed; however, this does affect the prevalence rate of the detections in the data. As a result, the estimated encounter rate based on these subsampled data will be larger than the true encounter rate. When examining the outputs from the models it will be important to recall that we altered the prevalence rate at this stage.
 
 ## Hurdle model {#sec-abundance-hurdle}
 
-For this two-step hurdle model, we'll start by training an random forests model for encounter rate model. Then we'll subset the eBird checklist to only those where the species was detected or predicted to occur by the encounter rate model. We'll use this subset of the data to train a second random forests model for expected count. Finally we'll combine the results of the two steps together to produce estimates of relative abundance.
+For this two-step hurdle model, we'll start by training an random forests model for encounter rate. Then we'll subset the eBird checklist to only those where the species was detected or predicted to occur by the encounter rate model. We'll use this subset of the data to train a second random forests model for expected count. Finally we'll combine the results of the two steps together to produce estimates of relative abundance.
 
 Let's start by select by removing the 20% of checklists held aside for testing and selecting only those columns we'll use as response or predictor variables in the models.
 
@@ -163,7 +163,7 @@ checklists_train <- checklists_sampled %>%
 
 For the first step of the hurdle model we'll train a random forests model to estimate the probability of detection/non-detection of Chucao Tapaculo, a binary classification problem. Random forests are an excellent, general purpose machine learning method suitable for modeling encounter rate in a wide variety of scenarios.
 
-Most classification algorithms aim to minimize the overall error rate, which results in poor predictive performance for rare classes. To address this issue, we'll use a balanced random forests approach, a modification of the traditional random forest algorithm designed to handle imbalanced data. In this approach, each of the trees that makes up the random forest is generated using a random sample of the data chosen such that there is an equal number of the detections (the rare class) and non-detections (the common class). To use this approach, we'll need to calculate the proportion of detections in the dataset.
+Most classification algorithms aim to minimize the overall error rate, which results in poor predictive performance for rare classes. To address this issue, we'll use a balanced random forests approach, a modification of the traditional random forest algorithm designed to handle imbalanced data. In this approach, each of the trees that makes up the random forest is generated using a random sample of the data chosen such that there are an equal number of detections (the rare class) and non-detections (the common class). To use this approach, we'll need to calculate the proportion of detections in the dataset.
 
 ```{r}
 #| label: abundance-hurdle-er-freq
@@ -200,7 +200,7 @@ calibration_model <- scam(obs ~ s(pred, k = 6, bs = "mpi"),
                           data = obs_pred)
 ```
 
-The random forest model produces continuous estimates of encounter rate from 0-1. However, for many applications, including selecting which observations are included in the next stage of the hurdle, we'll need to reclassify this continuous probability to a binary presence/absence estimate. This reclassification is done by setting a threshold above which the species is predicted to be absent. We recommend selecting a threshold setting method using the [MCC-F1 curve](https://arxiv.org/abs/2006.11278), which performs well for class imbalanced data. The R package `mccf1` implements this method.
+The random forest model produces continuous estimates of encounter rate from 0-1. However, for many applications, including selecting which observations are included in the next stage of the hurdle, we'll need to reclassify this continuous probability to a binary presence/absence estimate. This reclassification is done by setting a threshold above which the species is predicted to be absent. We recommend selecting a threshold using the [MCC-F1 curve](https://arxiv.org/abs/2006.11278), which performs well for class imbalanced data. The R package `mccf1` implements this method.
 
 ```{r}
 #| label: abundance-hurdle-er-threshold
@@ -404,7 +404,7 @@ ggplot(head(pi, 10)) +
         panel.grid.major.x = element_line(colour = "#cccccc", linewidth = 0.5))
 ```
 
-The most important predictors of detection/non-detection are often effort variables. Indeed, that's the case here: checklist duration, distance traveled, and start time (`hours_of_day`) all appear in the top 5 predictors. This is not surprising: going out at the right time of day and expending more effort searching will lead to a higher probability of detecting Wood Thrush. Focusing on the habitat variables, both elevation variables have high importance, and the top habitat variables are from deciduous broadleaf forest and woody savanna. Note however, that high importance doesn't tell us the direction of the relationship with detection, for that we'll have to look at partial dependence plots.
+The most important predictors of detection/non-detection are often effort variables. Indeed, that's the case here: checklist duration, distance traveled, and time of day (`solar_noon_diff`) all appear in the top 5 predictors. This is not surprising: going out at the right time of day and expending more effort searching will lead to a higher probability of detecting Wood Thrush. Focusing on the habitat variables, both elevation variables have high importance, and the top habitat variables are from evergreen broadleaf forest and sparse forests. Note however, that high importance doesn't tell us the direction of the relationship with detection, for that we'll have to look at partial dependence plots.
 
 ::: {.callout-caution icon=false}
 ## Exercise
@@ -515,7 +515,7 @@ Consider the relationships shown in the partial dependence plots in light of you
 
 ## Prediction {#sec-abundance-predict}
 
-Using the prediction grid described in @sec-ebird-pred, we can estimate relative abundance over for our entire study area. First we estimate encounter rate and count, then we multiply these together to get an estimate of relative abundance. Let's read in the prediction grid and subset to just the region we're focusing on.
+Using the prediction grid described in @sec-ebird-pred, we can estimate relative abundance over our entire study area. First we estimate encounter rate and count, then we multiply these together to get an estimate of relative abundance. Let's read in the prediction grid and subset to just the region we're focusing on.
 
 ```{r}
 #| label: abundance-predict-read
@@ -533,7 +533,7 @@ pred_grid <- semi_join(pred_grid_all, in_region, by = "srd_id")
 
 The prediction grid only includes values for the environmental variables, so to make predictions we'll need to add effort variables to this prediction grid. We'll make predictions for a **standard eBird checklist**: a 1 km, 2 hour traveling count at the peak time of day for detecting this species. Finally, we'll make these predictions for Janurary 31, 2021, the middle of our January-February focal window for the latest year for which we have eBird data.
 
-To find the time of day with the highest detection probability, we can look for the peak of the partial dependence plot. The one caveat to this approach is that it's important we focus on times of day for which there are enough data to make predictions. In particular, there's an increasing trend in detectability with earlier start times, and few checklists late at night, which can cause the model to incorrectly extrapolate that trend to show highest detectability at night. Let's start by looking at a plot to see if this is happening here.
+To find the time of day with the highest detection probability, we can look for the peak of the partial dependence plot.
 
 ```{r}
 #| label:  abundance-predict-pd
@@ -633,7 +633,8 @@ study_region_proj <- st_transform(study_region, crs = map_proj) %>%
   st_geometry()
 
 # project the raster data
-r_pred_proj <- project(r_pred, map_proj, method = "near")
+r_pred_proj <- crop(r_pred, st_transform(study_region, crs(r_pred))) %>% 
+  project(map_proj, method = "near")
 ```
 
 Finally we'll produce a map of relative abundance. The values shown on this map are the expected number of Chucao Tapaculo seen by an average eBirder conducting a 2 hour, 1 km checklist on January 31, 2021 at the optimal time of day for detecting the species. Prior to mapping the relative abundance, we'll multiple by the `in_range` layer, which will produce a map showing zero relative abundance where the model predicts that Chucao Tapaculo does not occur.

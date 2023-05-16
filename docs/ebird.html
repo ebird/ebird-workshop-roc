@@ -192,7 +192,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#sec-ebird-erd" id="toc-sec-ebird-erd" class="nav-link active" data-scroll-target="#sec-ebird-erd"><span class="toc-section-number">1.1</span>  eBird Reference Dataset (ERD)</a></li>
   <li><a href="#sec-ebird-zf" id="toc-sec-ebird-zf" class="nav-link" data-scroll-target="#sec-ebird-zf"><span class="toc-section-number">1.2</span>  Zero-filling eBird data</a></li>
   <li><a href="#sec-ebird-pred" id="toc-sec-ebird-pred" class="nav-link" data-scroll-target="#sec-ebird-pred"><span class="toc-section-number">1.3</span>  Prediction grid</a></li>
-  <li><a href="#sec-ebird-sampling" id="toc-sec-ebird-sampling" class="nav-link" data-scroll-target="#sec-ebird-sampling"><span class="toc-section-number">1.4</span>  Case controlled grid sampling</a></li>
+  <li><a href="#sec-ebird-bias" id="toc-sec-ebird-bias" class="nav-link" data-scroll-target="#sec-ebird-bias"><span class="toc-section-number">1.4</span>  Spatial and temporal bias</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/ebird/ebird-workshop-roc/edit/main/ebird.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/ebird/ebird-workshop-roc/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -216,9 +216,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>eBird data are collected and organized around the concept of a checklist, representing observations from a single birding event, such as a 1 km walk through a park or 15 minutes observing bird feeders in your backyard. All eBird checklists contains a list of species observed and the location and time of the observations. For a subset of checklists, the observer will also provide counts of the number of individuals seen of each species, specify the amount of effort expended while collecting these data, and confirm that they are submitting a complete checklist of all the birds they were able to identify. This data provided by these checklists is often referred to as <strong>semi-structured citizen science data</strong>.</p>
+<p>eBird data are collected and organized around the concept of a checklist, representing observations from a single birding event, such as a 1 km walk through a park or 15 minutes observing bird feeders in your backyard. All eBird checklists contains a list of species observed and the location and time of the observations. For a subset of checklists, the observer will also provide counts of the number of individuals seen of each species, specify the amount of effort expended while collecting these data, and confirm that they are submitting a complete checklist of all the birds they were able to identify. The data provided by the checklists such as these is often referred to as <strong>semi-structured citizen science data</strong>.</p>
 <p>Let’s compare two eBird checklists: an <a href="https://ebird.org/checklist/S136805959">incidental observation with missing counts</a> and a <a href="https://ebird.org/checklist/S136805666">complete traveling count</a>. Both checklists can be useful, but only the second checklist provides the type of semi-structured data required for more rigorous applications.</p>
 <p>This lesson will focus on the eBird Reference Dataset (ERD), the collection of semi-structured eBird data used by the eBird Status and Trends team for modeling species distributions and relative abundance. A subset of this dataset for Chile was provided in the data package for this workshop. In the following sections we’ll provide an introduction to the ERD, describe the associated prediction grid used to make predictions across space, and highlight some of the challenges associated with using eBird data for analysis.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This workshop will only cover the eBird Reference Dataset (ERD), a subset of the eBird database generated annually by the eBird Status and Trends team. For access to the full eBird dataset updated monthly, you’ll need to work with the <a href="https://science.ebird.org/en/use-ebird-data/download-ebird-data-products">eBird Basic Dataset (EBD)</a>. This dataset is more challenging to work with and does not contain any habitat variables, but it is more current and complete. For details on working with the EBD consult the <a href="https://ebird.github.io/ebird-best-practices">eBird Best Practices book</a>.</p>
+</div>
+</div>
 <section id="sec-ebird-erd" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="sec-ebird-erd"><span class="header-section-number">1.1</span> eBird Reference Dataset (ERD)</h2>
 <p>The eBird Reference Dataset (ERD) is a subset of the full eBird database released annually, containing only semi-structured (complete checklists with effort information) traveling and stationary counts from the last 15 years. The ERD is distributed in two parts: observation data and checklist data. In the observation dataset, each row corresponds to the sighting of a single species on a checklist, including the count and any other species-level information (e.g.&nbsp;age, sex, species comments, etc.). In the checklist dataset, each row corresponds to a checklist, including the date, time, location, effort (e.g.&nbsp;distance traveled, time spent, etc.), and any additional checklist-level information (e.g.&nbsp;whether this is a complete checklist or not). These two datasets are provided in <a href="https://parquet.apache.org/">parquet format</a>, an open source standard for efficient storage and retrieval of tabular data, in the following files:</p>
@@ -338,8 +351,14 @@ data/ebird_checklists_chile_2021.parquet</code></pre>
 <span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ mcd12q1_lccs3_fs_c51_1500_pland  &lt;dbl&gt; 0.00, 0.00, 0.00, 0.00, 0.00, 2.78, 0…</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>There are a huge number of columns in this data frame. The first set of variables provide standard information about the checklist: where and when did the observation occur, what type of search was conducted, and how much search effort was expended. Two important differences exist between these variables and what you will see if you look at the raw eBird dataset: when a GPS track is available we replace the checklist or hotspot location (latitude/longitude) with the centroid of the track and the time of the checklist is expressed as the difference between the checklist midpoint and solar noon, a more ecologically meaningful quantity.</p>
-<p>The next set of variables, those beginning with <code>cds_</code>, provides information about the weather at the time of the observation, which can impact detectibility. This is followed by a large suite of environmental variables summarized over a 3km diameter circular neighborhood around the checklist location, including variables describing: elevation and topography, land and water cover, roads, and night time lights (a proxy for urban development). Most variables are summarized as two quantities expressing composition (what habitat is available) and configuration (how that habitat is arranged spatially).</p>
-<p>The land and water cover variables can be challenging to interpret based on their names alone (e.g.&nbsp;<code>mcd12q1_lccs1_fs_c12_1500_pland</code>); however, these names can be looked up in the <code>ebirdst_predictors</code> data frame from the <code>ebirdst</code> package. Note that <code>pland</code> refers to percent cover for a particular class and <code>ed</code> refers to edge density for a particular class within the 3km neighborhood. For example, let’s look up what <code>mcd12q1_lccs1_fs_c12_1500_pland</code> corresponds to.</p>
+<p>All the remaining variables are not collected in eBird, they’re calculated and added by the Status and Trends team based on external data sets. First, those variables beginning with <code>cds_</code>, provides information about the weather at the time of the observation, which can impact detectibility. This is followed by a large suite of environmental variables summarized over a 3km diameter circular neighborhood around the checklist location, including variables describing: elevation and topography, land and water cover, roads, and night time lights (a proxy for urban development). Most variables are summarized as two quantities expressing composition (what habitat is available) and configuration (how that habitat is arranged spatially). For continuous variables, such as elevation, we use the median and standard deviation. For categorical variables, such as land cover class, we use percent landcover (<code>pland</code>) and edge density (<code>ed</code>).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/landscape-metrics.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Example of calculating percent land cover and edge density for a 3km diamter circular neighborhood centered on a checklist location. <code>pland</code> for each class is the percent of the circle covered by that class. To calculate <code>ed</code> for each class, we add up the perimeter lengths of all patches of that class, then divide by the area of the circle.</figcaption><p></p>
+</figure>
+</div>
+<p>The land and water cover variables can be challenging to interpret based on their names alone (e.g.&nbsp;<code>mcd12q1_lccs1_fs_c12_1500_pland</code>); however, these names can be looked up in the <code>ebirdst_predictors</code> data frame from the <code>ebirdst</code> package. For example, let’s look up what <code>mcd12q1_lccs1_fs_c12_1500_pland</code> corresponds to.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(ebirdst_predictors, predictor <span class="sc">==</span> <span class="st">"mcd12q1_lccs1_fs_c12_1500_pland"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(predictor, predictor_label)</span>
@@ -373,13 +392,32 @@ Checkpoint
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ valid                  &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ obs_count              &lt;int&gt; 2, 4, 2, 1, 1, 3, 1, 4, 1, NA, 1, NA, NA, NA, N…</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This is a much simpler dataset with only five columns: - <code>checklist_id</code>: unique identifier for the checklist that this observation belongs to. Allows joining the observation data to the checklist data. - <code>species_code</code>: unique identifier for the species that this observation was made for. - <code>only_presence_reported</code>: a binary variable indicating if a count of the number of individuals seen was provided for the species (0) or if an “X” was used to indicate the species was detected but not counted (1). - <code>valid</code>: a binary variable indicating is the observation was determined to be valid (1) or invalid (0) by the eBird reviewers. - <code>obs_count</code>: count of the number of individuals or an <code>NA</code> if no count was provided.</p>
-<p>To look up the common name or scientific name of a species try appending the species code to the URL <code>https://ebird.org/species/</code>. For example, visit https://ebird.org/species/eardov1 to look up the species code <code>eardov1</code>. This information is also available in the <code>ebird_taxonomy</code> data frame in the <code>auk</code> package.</p>
+<p>This is a much simpler dataset with only five columns:</p>
+<ul>
+<li><code>checklist_id</code>: unique identifier for the checklist that this observation belongs to. Allows joining the observation data to the checklist data.</li>
+<li><code>species_code</code>: unique identifier for the species that this observation was made for.</li>
+<li><code>only_presence_reported</code>: a binary variable indicating if a count of the number of individuals seen was provided for the species (0) or if an “X” was used to indicate the species was detected but not counted (1).</li>
+<li><code>valid</code>: a binary variable indicating is the observation was determined to be valid (1) or invalid (0) by the eBird reviewers.</li>
+<li><code>obs_count</code>: count of the number of individuals or an <code>NA</code> if no count was provided.</li>
+</ul>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To look up the common name or scientific name of a species try appending the species code to the URL <code>https://ebird.org/species/</code>. For example, visit <a href="https://ebird.org/species/eardov1">https://ebird.org/species/eardov1</a> to look up the species code <code>eardov1</code>. This information is also available in the <code>ebird_taxonomy</code> data frame in the <code>auk</code> package.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(ebird_taxonomy, species_code <span class="sc">==</span> <span class="st">"eardov1"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species_code, common_name, scientific_name, family)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   species_code common_name    scientific_name     family</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1      eardov1  Eared Dove Zenaida auriculata Columbidae</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
 </div>
 </section>
 <section id="sec-ebird-zf" class="level2" data-number="1.2">
@@ -390,23 +428,23 @@ Checkpoint
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>chutap1_detections <span class="ot">&lt;-</span> observations <span class="sc">%&gt;%</span> </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species_code <span class="sc">==</span> <span class="st">"chutap1"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(checklist_id, valid, obs_count) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">detected =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">obs_detected =</span> 1L)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Next join this set of detections to the complete set of checklists, including detections and non-detections.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>chutap1_all <span class="ot">&lt;-</span> checklists <span class="sc">%&gt;%</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(checklist_id, latitude, longitude, year, day_of_year) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(chutap1_detections, <span class="at">by =</span> <span class="st">"checklist_id"</span>)</span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>chutap1_all <span class="ot">&lt;-</span> <span class="fu">left_join</span>(checklists, chutap1_detections, <span class="at">by =</span> <span class="st">"checklist_id"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(checklist_id, latitude, longitude, year, day_of_year,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>         valid, obs_count, obs_detected)</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(chutap1_all)</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 8</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   checklist_id latitude longitude  year day_of_year valid obs_count detected</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;          &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;int&gt;       &lt;dbl&gt; &lt;int&gt;     &lt;int&gt; &lt;lgl&gt;   </span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    100062145    -32.9     -71.5  2021         363    NA        NA NA      </span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    100164965    -35.6     -71.0  2021         365     1        NA TRUE    </span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3    100241802    -40.6     -73.1  2021         361    NA        NA NA      </span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4     10034436    -33.4     -70.2  2012          52    NA        NA NA      </span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5    100385722    -32.7     -71.4  2021         355    NA        NA NA      </span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6    100390786    -33.3     -70.3  2021         360    NA        NA NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   checklist_id latitude longitude  year day_of_year valid obs_count obs_detected</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;          &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;int&gt;       &lt;dbl&gt; &lt;int&gt;     &lt;int&gt;        &lt;int&gt;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    100062145    -32.9     -71.5  2021         363    NA        NA           NA</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    100164965    -35.6     -71.0  2021         365     1        NA            1</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3    100241802    -40.6     -73.1  2021         361    NA        NA           NA</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4     10034436    -33.4     -70.2  2012          52    NA        NA           NA</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5    100385722    -32.7     -71.4  2021         355    NA        NA           NA</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6    100390786    -33.3     -70.3  2021         360    NA        NA           NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Finally, for rows where Chucao Tapaculo was not detected we can replace the missing counts with 0. At this time, we recommend removing any checklists with <code>valid == 0</code> because there is uncertainty about whether or not the species was detected.</p>
 <div class="cell" data-layout-align="center">
@@ -414,9 +452,9 @@ Checkpoint
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(valid) <span class="sc">|</span> valid <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># checklist not in the observations dataset are non-detections</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">detected =</span> <span class="fu">coalesce</span>(detected, <span class="cn">FALSE</span>),</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">obs_detected =</span> <span class="fu">coalesce</span>(obs_detected, 0L),</span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># non-detections correspond to a count of 0</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">obs_count =</span> <span class="fu">if_else</span>(detected, obs_count, <span class="dv">0</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">obs_count =</span> <span class="fu">if_else</span>(obs_detected <span class="sc">==</span> <span class="dv">1</span>, obs_count, <span class="dv">0</span>)</span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can now, for example, make a map of Chucao Tapaculo observations in the Chilean region of Los Lagos We’ll use spatial data that was prepared in advance and provided in the data package.</p>
@@ -453,18 +491,18 @@ Checkpoint
 <span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ne_state_lines, <span class="at">col =</span> <span class="st">"#ffffff"</span>, <span class="at">lwd =</span> <span class="fl">0.75</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ne_country_lines, <span class="at">col =</span> <span class="st">"#ffffff"</span>, <span class="at">lwd =</span> <span class="fl">1.5</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="co"># ebird observations</span></span>
-<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a><span class="co"># not detected</span></span>
-<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">filter</span>(chutap1_sf, <span class="sc">!</span>detected),</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a><span class="co"># all</span></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(chutap1_sf,</span>
 <span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">cex =</span> <span class="fl">0.1</span>, <span class="at">col =</span> scales<span class="sc">::</span><span class="fu">alpha</span>(<span class="st">"#555555"</span>, <span class="fl">0.25</span>),</span>
 <span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>     <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning in plot.sf(filter(chutap1_sf, !detected), pch = 19, cex = 0.1, col =</span></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning in plot.sf(chutap1_sf, pch = 19, cex = 0.1, col =</span></span>
 <span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; scales::alpha("#555555", : ignoring all but the first attribute</span></span>
-<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a><span class="co"># detected</span></span>
-<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">filter</span>(chutap1_sf, detected),</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a><span class="co"># detection</span></span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">filter</span>(chutap1_sf, obs_detected <span class="sc">==</span> <span class="dv">1</span>),</span>
 <span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">cex =</span> <span class="fl">0.3</span>, <span class="at">col =</span> scales<span class="sc">::</span><span class="fu">alpha</span>(<span class="st">"#4daf4a"</span>, <span class="dv">1</span>),</span>
 <span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>     <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning in plot.sf(filter(chutap1_sf, detected), pch = 19, cex = 0.3, col =</span></span>
-<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; scales::alpha("#4daf4a", : ignoring all but the first attribute</span></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning in plot.sf(filter(chutap1_sf, obs_detected == 1), pch = 19, cex = 0.3,</span></span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; : ignoring all but the first attribute</span></span>
 <span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a><span class="co"># legend</span></span>
 <span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomright"</span>, <span class="at">bty =</span> <span class="st">"n"</span>,</span>
 <span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"#555555"</span>, <span class="st">"#4daf4a"</span>),</span>
@@ -495,7 +533,7 @@ Exercise
 </div>
 </div>
 <div class="callout-note callout callout-style-default no-icon callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -504,28 +542,28 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>For example, to produce detection/non-detection data for <a href="https://ebird.org/species/thtray1">Thorn-tailed Rayadito</a> use:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>thtray1_zf <span class="ot">&lt;-</span> observations <span class="sc">%&gt;%</span> </span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species_code <span class="sc">==</span> <span class="st">"thtray1"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">detected =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">obs_detected =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(checklists, ., <span class="at">by =</span> <span class="st">"checklist_id"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(valid) <span class="sc">|</span> valid <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">detected =</span> <span class="fu">coalesce</span>(detected, <span class="cn">FALSE</span>),</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">obs_count =</span> <span class="fu">if_else</span>(detected, obs_count, <span class="dv">0</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(checklist_id, detected, obs_count)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">obs_detected =</span> <span class="fu">coalesce</span>(obs_detected, <span class="dv">0</span>),</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">obs_count =</span> <span class="fu">if_else</span>(obs_detected <span class="sc">==</span> <span class="dv">1</span>, obs_count, <span class="dv">0</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(checklist_id, obs_detected, obs_count)</span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(thtray1_zf)</span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 3</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   checklist_id detected obs_count</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;          &lt;dbl&gt; &lt;lgl&gt;        &lt;dbl&gt;</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    100062145 FALSE            0</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    100164965 TRUE            NA</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3    100241802 FALSE            0</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4     10034436 FALSE            0</span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5    100385722 FALSE            0</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6    100390786 FALSE            0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   checklist_id obs_detected obs_count</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;          &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    100062145            0         0</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    100164965            1        NA</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3    100241802            0         0</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4     10034436            0         0</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5    100385722            0         0</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6    100390786            0         0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -661,9 +699,9 @@ Solution
 </div>
 <p>The map looks distorted because the prediction grid uses a sinusoidal projection, which works well for analysis but not for mapping. In the next lesson, we’ll demonstrate how to project data into a coordinate reference system more suitable for mapping.</p>
 </section>
-<section id="sec-ebird-sampling" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="sec-ebird-sampling"><span class="header-section-number">1.4</span> Case controlled grid sampling</h2>
-<p>Despite the strengths of eBird data, species observations collected through citizen science projects exhibit both spatial and temporal bias requiring special care when using them for rigorous analyses. <strong>Spatial bias</strong> occurs because eBird participants are more likely to be collect data near their homes, in easily accessible areas such as roadsides, or in areas known to be good for birding. Looking at the above map of Chucao Tapaculo observations it’s clear that the eBird checklists are clustered around cities and roads. <strong>Temporal bias</strong> occurs because participants preferentially collect data when they are available, such as weekends, and at times of year when they expect to observe more birds, notably during the breeding season. Sampling. We can plot the distribution of checklists over the days of the year to see this bias:</p>
+<section id="sec-ebird-bias" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="sec-ebird-bias"><span class="header-section-number">1.4</span> Spatial and temporal bias</h2>
+<p>Despite the strengths of eBird data, species observations collected through citizen science projects exhibit both spatial and temporal bias requiring special care when using them for rigorous analyses. <strong>Spatial bias</strong> occurs because eBird participants are more likely to be collect data near their homes, in easily accessible areas such as roadsides, or in areas known to be good for birding. Looking at the above map of Chucao Tapaculo observations it’s clear that the eBird checklists are clustered around cities and roads. <strong>Temporal bias</strong> occurs because participants preferentially collect data when they are available, such as weekends, and at times of year when they expect to observe more birds, notably during the breeding season. We can plot the distribution of checklists over the days of the year to see this bias:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>checklist_per_day <span class="ot">&lt;-</span> checklists <span class="sc">%&gt;%</span> </span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(day_of_year <span class="sc">&lt;</span> <span class="dv">366</span>) <span class="sc">%&gt;%</span> </span>
@@ -678,31 +716,65 @@ Solution
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="ebird_files/figure-html/sec-ebird-sampling-dayplot-1.png" class="img-fluid figure-img"></p>
+<p><img src="ebird_files/figure-html/sec-ebird-bias-dayplot-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
+<p>Three is a clear seasonal pattern to the number of eBird checklists submitted (fewer checklists in the winter) as well as daily and weekly variation within seasons. In addition, there are two huge spikes in checklists submissions, one in May and the other in October, what do you think could be causing these sudden increases?</p>
 <p>Finally, for most species, there is strong <strong>class imbalance</strong> in the data, meaning there are usually many more non-detections than detections. As a results, a distribution model predicting that the species is absent everywhere will have high accuracy, but no ecological value. For example, the prevalence rate of Chucao Tapaculo in Chile is only 5%.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(chutap1_zf<span class="sc">$</span>detected)</span>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(chutap1_zf<span class="sc">$</span>obs_detected)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.0518</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>To address these three issues (spatial bias, temporal bias, and class imbalance) we recommend subsampling the data using a technique called <strong>case controlled grid sampling</strong>. We overlay an equal area 3km by 3km grid over the checklists, then sample one detection and one non-detection from each grid cell for each week of each year. The function <code>grid_sample_stratified()</code> from the <code>ebirdst</code> package is specifically designed to perform case controlled grid sampling on eBird data. For example, let’s apply this technique to the Chucalo Tapaculo observations.</p>
+<p>To address these three issues (spatial bias, temporal bias, and class imbalance) we recommend subsampling the data using a technique called <strong>case controlled grid sampling</strong>. We overlay an equal area 3km by 3km grid over the checklists, then sample one detection and one non-detection from each grid cell for each week of each year. Let’s look at a simple example of how spatial grid sampling works.”</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/grid-sampling_1.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">1. Take one week of eBird observations. Detections are show in <span style="color:#4daf4a"><strong>green</strong></span> and non-detections are shown in <span style="color:#555555"><strong>gray</strong></span>.</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/grid-sampling_2.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">2. Separate the detections and non-detections. In this example, there is a higher density of observations in the lower right corner of the region and the prevalence of detections is 2%.</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/grid-sampling_3.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">3. Overlay an equal area grid on top of the points, For Status and Trends we use a 3km by 3km grid.</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/grid-sampling_4.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">4. Sample one checklist from each grid cell.</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/grid-sampling_5.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">5. Recombine the detections and non-detections. The observations are much more evenly distributed in space and the prevalence of detections has increased from 2% to 20%.</figcaption><p></p>
+</figure>
+</div>
+<p>The function <code>grid_sample_stratified()</code> from the <code>ebirdst</code> package is specifically designed to perform case controlled grid sampling on eBird data. For example, let’s apply this technique to the Chucao Tapaculo observations.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>chutap1_sampled <span class="ot">&lt;-</span> <span class="fu">grid_sample_stratified</span>(chutap1_zf, <span class="at">obs_column =</span> <span class="st">"detected"</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># how many checklists were removed?</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(chutap1_zf)</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 186906</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(chutap1_sampled)</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 77081</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co"># how has prevalence changed</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(chutap1_zf<span class="sc">$</span>detected)</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.0518</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(chutap1_sampled<span class="sc">$</span>detected)</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.0729</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># perform case controlled grid sampling</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>chutap1_sampled <span class="ot">&lt;-</span> <span class="fu">grid_sample_stratified</span>(chutap1_zf, </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">obs_column =</span> <span class="st">"obs_detected"</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># how many checklists were removed?</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(chutap1_zf)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 186906</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(chutap1_sampled)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 77265</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co"># how has prevalence changed</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(chutap1_zf<span class="sc">$</span>obs_detected)</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.0518</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(chutap1_sampled<span class="sc">$</span>obs_detected)</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.0728</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>So, after sampling, we’re left with 41% of the observations we started with, but the spatial and temporal bias has been significantly reduced.</p>
 <p>We now have the data and tools necessary to model relative abundance using eBird data, which will be the focus of <a href="abundance.html">Lesson&nbsp;<span>2</span></a>.</p>

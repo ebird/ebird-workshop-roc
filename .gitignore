@@ -5,6 +5,7 @@
 data/
 data-raw/
 presentations/
+scripts/
 
 /.quarto/
 .Rdata

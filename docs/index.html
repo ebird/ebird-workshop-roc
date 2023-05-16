@@ -232,7 +232,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="https://ebird.org/data/download">Request access</a> to raw eBird data.</li>
 <li><a href="https://science.ebird.org/en/status-and-trends/download-data">Request access</a> to the eBird Status data products.</li>
 <li><a href="https://cloud.r-project.org/">Download</a> and install the latest version of R. <strong>You must have R version 4.0.0 or newer to follow along with this workshop</strong></li>
-<li><a href="https://posit.co/download/rstudio-desktop/#download">Download</a> and install the latest version of RStudio. RStudio is not required for this workshop; however, the instructors will be using and you may find it easier to following along if you’re working in the same environment.</li>
+<li><a href="https://posit.co/download/rstudio-desktop/#download">Download</a> and install the latest version of RStudio. RStudio is not required for this workshop; however, the instructors will be using it and you may find it easier to following along if you’re working in the same environment.</li>
 <li>The lessons in this workshop use a variety of R packages. To install all the necessary packages, run the following code</li>
 </ol>
 <div class="cell" data-layout-align="center">
@@ -247,7 +247,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="sec-intro-data" class="level2">
 <h2 class="anchored" data-anchor-id="sec-intro-data">Data</h2>
-<p>To follow along with the lessons in the workshop you’ll need to download the workshop data package. This data package contains a variety of datasets used throughout the three lessons. You should have received an email with a link to a Google Drive folder containing all the data. Download all files in the folder, <a href="https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects">create a new RStudio project</a>, and place all the downloaded files in the <code>data/</code> subdirectory of the project.</p>
+<p>To follow along with the lessons in the workshop you’ll need to download the workshop data package. This data package contains a variety of datasets used throughout the three lessons. You should have received an email with a link to download a zip file from Google Drive. Download all files in the folder, <a href="https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects">create a new RStudio project</a>, unzip the data package, and place all the files in the <code>data/</code> subdirectory of the project.</p>
 </section>
 <section id="sec-intro-tidyverse" class="level2">
 <h2 class="anchored" data-anchor-id="sec-intro-tidyverse">Tidyverse</h2>
@@ -264,7 +264,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span> <span class="sc">%&gt;%</span> <span class="fu">mean</span>()</span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 5.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The pipe makes code significantly more readable by avoiding nested function calls, reducing the need for intermediate variables, and making sequential operations read left-to-right. For example, to add a new variable to a data frame, then summarize using a grouping variable, the following are equivalent:</p>
+<p>The pipe can code significantly more readable by avoiding nested function calls, reducing the need for intermediate variables, and making sequential operations read left-to-right. For example, to add a new variable to a data frame, then summarize using a grouping variable, the following are equivalent:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># intermediate variables</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>mtcars_kg <span class="ot">&lt;-</span> <span class="fu">mutate</span>(mtcars, <span class="at">wt_kg =</span> <span class="dv">454</span> <span class="sc">*</span> wt)</span>

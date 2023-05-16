@@ -21,7 +21,7 @@ This workshop is intended to be interactive. All examples are written in the R p
 1. [Request access](https://ebird.org/data/download) to raw eBird data.
 2. [Request access](https://science.ebird.org/en/status-and-trends/download-data) to the eBird Status data products.
 3. [Download](https://cloud.r-project.org/) and install the latest version of R. **You must have R version 4.0.0 or newer to follow along with this workshop**
-4. [Download](https://posit.co/download/rstudio-desktop/#download) and install the latest version of RStudio. RStudio is not required for this workshop; however, the instructors will be using and you may find it easier to following along if you're working in the same environment.
+4. [Download](https://posit.co/download/rstudio-desktop/#download) and install the latest version of RStudio. RStudio is not required for this workshop; however, the instructors will be using it and you may find it easier to following along if you're working in the same environment.
 5. The lessons in this workshop use a variety of R packages. To install all the necessary packages, run the following code
 
 ```{r}
@@ -37,7 +37,7 @@ remotes::install_github("ebird/ebird-best-practices")
 
 ## Data {#sec-intro-data}
 
-To follow along with the lessons in the workshop you'll need to download the workshop data package. This data package contains a variety of datasets used throughout the three lessons. You should have received an email with a link to a Google Drive folder containing all the data. Download all files in the folder, [create a new RStudio project](https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects), and place all the downloaded files in the `data/` subdirectory of the project.
+To follow along with the lessons in the workshop you'll need to download the workshop data package. This data package contains a variety of datasets used throughout the three lessons. You should have received an email with a link to download a zip file from Google Drive. Download all files in the folder, [create a new RStudio project](https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects), unzip the data package, and place all the files in the `data/` subdirectory of the project.
 
 ## Tidyverse {#sec-intro-tidyverse}
 
@@ -56,7 +56,7 @@ mean(1:10)
 1:10 %>% mean()
 ```
 
-The pipe makes code significantly more readable by avoiding nested function calls, reducing the need for intermediate variables, and making sequential operations read left-to-right. For example, to add a new variable to a data frame, then summarize using a grouping variable, the following are equivalent:
+The pipe can code significantly more readable by avoiding nested function calls, reducing the need for intermediate variables, and making sequential operations read left-to-right. For example, to add a new variable to a data frame, then summarize using a grouping variable, the following are equivalent:
 
 ```{r}
 #| label: intro-tidyverse-dplyr
