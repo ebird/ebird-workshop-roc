@@ -88,7 +88,7 @@ All species go through a process of expert human review prior to being released.
 
 The **seasonal dates** define the weeks that fall within each season; the relative abundance estimates for these weeks get averaged to produce the seasonal relative abundance maps on the Status and Trends website. Breeding and non-breeding season dates are defined for each species as the weeks during those seasons when the species’ population does not move. For this reason, these seasons are also described as stationary periods. Migration periods are defined as the periods of movement between the stationary non-breeding and breeding seasons. Note that for many species these migratory periods include not only movement from breeding grounds to non-breeding grounds, but also post-breeding dispersal, molt migration, and other movements. 
 
-Reviewers also examine the model estimates for each season to assess the amount of extrapolation or omission present in the model, and assign an associated quality rating ranging from 0 (lowest quality) to 3 (highest quality). Extrapolation refers to cases where the model predicts occurrence where the species is known to be absent, while omission refers to the model failing to predict occurrence where a species is known to be present.
+Reviewers also examine the model estimates for each season to assess the amount of extrapolation or omission present in the model, and assign an associated **quality** rating ranging from 0 (lowest quality) to 3 (highest quality). Extrapolation refers to cases where the model predicts occurrence where the species is known to be absent, while omission refers to the model failing to predict occurrence where a species is known to be present.
 
 A rating of 0 implies this season failed review and model results should not be used at all for this period. Ratings of 1-3 correspond to a gradient of more to less extrapolation and/or omission, and we often use a traffic light analogy when referring to them:
 
@@ -305,7 +305,7 @@ abd_weekly[["2021-05-17"]]
 abd_seasonal[["breeding"]]
 ```
 
-We can also subset the weekly cube to a range of weeks. For example, let's subset to only the estimates for weeks in may, then take the average across the weeks.
+We can also subset the weekly cube to a range of weeks. For example, let's subset to only the estimates for weeks in May, then take the average across the weeks.
 
 ```{r}
 #| label: ebirdst-explore-mean
@@ -329,7 +329,7 @@ Making a simple map of the data will produce unexpected results. For example, le
 plot(abd_seasonal[["breeding"]])
 ```
 
-Recall that all eBird Status data products are provided for the entire globe regardless of the range of the species. Also, notice that some areas, such as most of the Amazon Basin, have missing values indicating that there was insufficient data to make a prediction in the region. Other areas, such as North America, had sufficient data to predict that the species is absent. Let's try using the GIS data included in the workshop data package to crop the raster to the Chilean region of Los Lagos to make a more meaningful map.
+Recall that all eBird Status data products are provided for the entire globe, regardless of the range of the species. Also, notice that some areas, such as most of the Amazon Basin, have missing values indicating that there was insufficient data to make a prediction in the region. Other areas, such as North America, had sufficient data to predict that the species is absent. Let's try using the GIS data included in the workshop data package to crop the raster to the Chilean region of Los Lagos to make a more meaningful map.
 
 ```{r}
 #| label: ebirdst-explore-chilemap
@@ -396,7 +396,7 @@ trajectory <- data.frame(
 head(trajectory)
 ```
 
-Now we can plot the trajectories with confidence intervals.
+Finally we can plot the trajectories with confidence intervals.
 
 ```{r}
 #| label: ebirdst-applications-trajectories-plot
@@ -516,7 +516,7 @@ plot(r_plot, axes = FALSE)
 
 The absolute numbers in this map are challenging to interpret (they're the mean proportion of the population across the 10 species in each cell). Instead, the values should be interpreted in relative terms, giving the relative importance of each cell for this set of 10 species.
 
-In the previous application, we examined existing public protected areas. For the sake of comparison, let's imagine we want to identify the most important sites in Chile that cover the same area as the existing protected area network. What proportion of chile does the current protected area cover?
+In the previous application, we examined existing public protected areas. For the sake of comparison, let's imagine we want to identify the most important sites in Chile that cover the same area as the existing protected area network. What proportion of Chile does the current protected area network cover?
 
 ```{r}
 #| label: ebirdst-applications-prioritization-area
@@ -544,15 +544,21 @@ Let's compare maps of the existing protected area network and the sites selected
 ```{r}
 #| label: ebirdst-applications-prioritization-maps
 par(mar = c(0.25, 0.25, 0.25, 0.25))
+
+# high importance
 r_plot <- project(selected_sites, crs, method = "near") %>% 
   trim()
 protected_proj <- st_transform(protected, crs = crs) %>% 
   st_geometry()
 plot(r_plot, axes = FALSE, legend = FALSE)
-plot(st_simplify(protected_proj), add = TRUE)
+
+# existing
+plot(st_simplify(protected_proj), 
+     col = "#00000088", border = NA,
+     add = TRUE)
 ```
 
-The high importance sites we identified are shown in green, while the existing protected area network is shown outlined in black. It appears the existing protected area network is mostly in southern Chile and there is limited overlap with areas of high importance to the 10 near-endemic species we chose to focus on. This is not surprising since the location of existing protected areas was not chosen specifically to protect these 10 species. Let's quantify what proportion of the population these two regions capture.
+The high importance sites we identified are shown in green, while the existing protected area network is overlayed in grey. It appears the existing protected area network is mostly in southern Chile and there is limited overlap with areas of high importance to the 10 near-endemic species we chose to focus on. This is not surprising since the location of existing protected areas was not chosen specifically to protect these 10 species. Let's quantify what proportion of the population these two regions capture.
 
 ```{r}
 #| label: ebirdst-applications-prioritization-compare
@@ -590,4 +596,4 @@ ggplot(comparison) +
   theme(legend.position = "bottom")
 ```
 
-So, for the same total area, we can capture a much larger proportion of the populations of these species if we use eBird Status data products for these species in our site prioritization. This exampel is, of course, overly simplistic. In practices, systematic conservation planning tools like the R package [`prioritizr`](https://prioritizr.net/) can perform much more complex prioritizations, accounting for both the spatial and temporal aspects of species distributions, taking advantage of [site complementarity](https://link.springer.com/article/10.1007/BF02704970), allowing for more flexible conservation goals, and accounting for both conservation value and economic cost of sites. eBird Status data products are well suited for use in systematic conservation planning exercises using `prioritizr`.
+So, for the same total area, we could capture a much larger proportion of the populations of these species if we use eBird Status data products for these species in our site prioritization. This example is, of course, overly simplistic. For example, in a real world application, different sites have different costs associated with protection and you would want to account for that during prioritization. For more complex prioritization problems, systematic conservation planning tools like the R package [`prioritizr`](https://prioritizr.net/) can be used effectively with eBird Status data products.
