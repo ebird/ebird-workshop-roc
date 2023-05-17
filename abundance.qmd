@@ -59,7 +59,7 @@ checklists <- read_parquet("data/ebird_checklists_chile_2021.parquet") %>%
   )
 ```
 
-Next let's subset the data to only observations from January and February, summer months during which we expect detectability and habitat associations to be stationary. To reduce variation in detecatability, we'll also subset the data to only those checklists less than 24 hours in duration and 10km in length, at speeds below 100km/h, and with 10 or fewer observers. Furthermore, we'll only consider data from the past 15 years (2007-2021).
+Next let's subset the data to only observations from January and February, summer months during which we expect detectability and habitat associations to be stationary. To reduce variation in detectability, we'll also subset the data to only those checklists less than 6 hours in duration and 10km in length, at speeds below 100km/h, and with 10 or fewer observers. Furthermore, we'll only consider data from the past 15 years (2007-2021).
 
 ```{r}
 #| label: abundance-data-filter
@@ -70,7 +70,7 @@ checklists <- checklists %>%
     # jan-feb
     day_of_year >= 1, day_of_year <= 59,
     # effort filters
-    effort_hours <= 24,
+    effort_hours <= 6,
     effort_distance_km <= 10,
     effort_speed_kmph <= 100,
     number_observers <= 10)

@@ -219,6 +219,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>eBird data are collected and organized around the concept of a checklist, representing observations from a single birding event, such as a 1 km walk through a park or 15 minutes observing bird feeders in your backyard. All eBird checklists contains a list of species observed and the location and time of the observations. For a subset of checklists, the observer will also provide counts of the number of individuals seen of each species, specify the amount of effort expended while collecting these data, and confirm that they are submitting a complete checklist of all the birds they were able to identify. The data provided by the checklists such as these is often referred to as <strong>semi-structured citizen science data</strong>.</p>
 <p>Let’s compare two eBird checklists: an <a href="https://ebird.org/checklist/S136805959">incidental observation with missing counts</a> and a <a href="https://ebird.org/checklist/S136805666">complete traveling count</a>. Both checklists can be useful, but only the second checklist provides the type of semi-structured data required for more rigorous applications.</p>
 <p>This lesson will focus on the eBird Reference Dataset (ERD), the collection of semi-structured eBird data used by the eBird Status and Trends team for modeling species distributions and relative abundance. A subset of this dataset for Chile was provided in the data package for this workshop. In the following sections we’ll provide an introduction to the ERD, describe the associated prediction grid used to make predictions across space, and highlight some of the challenges associated with using eBird data for analysis.</p>
+<section id="sec-ebird-erd" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="sec-ebird-erd"><span class="header-section-number">1.1</span> eBird Reference Dataset (ERD)</h2>
+<p>The eBird Reference Dataset (ERD) is a subset of the full eBird database created annually for Status and Trends modeling. Only semi-structured (complete checklists with effort information) traveling and stationary counts from the last 15 years are included in the ERD and we assign a set of environmental variables assigned to checklist.</p>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -229,12 +232,44 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This workshop will only cover the eBird Reference Dataset (ERD), a subset of the eBird database generated annually by the eBird Status and Trends team. For access to the full eBird dataset updated monthly, you’ll need to work with the <a href="https://science.ebird.org/en/use-ebird-data/download-ebird-data-products">eBird Basic Dataset (EBD)</a>. This dataset is more challenging to work with and does not contain any habitat variables, but it is more current and complete. For details on working with the EBD consult the <a href="https://ebird.github.io/ebird-best-practices">eBird Best Practices book</a>.</p>
+<p>This workshop will only cover the eBird Reference Dataset (ERD). For access to the full eBird dataset updated monthly, you’ll need to work with the <a href="https://science.ebird.org/en/use-ebird-data/download-ebird-data-products">eBird Basic Dataset (EBD)</a>. For details on working with the EBD consult the <a href="https://ebird.github.io/ebird-best-practices">eBird Best Practices book</a>. Some of the advantages and disadvantages of the two datasts are:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 39%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">eBird Reference Dataset (ERD)</th>
+<th style="text-align: left;">eBird Basic Dataset (EBD)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">contains only complete traveling and stationary counts from the last 15 years</td>
+<td style="text-align: left;">contains all eBird observations except for sensitive species</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">updated annually</td>
+<td style="text-align: left;">updated monthly</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">environmental variables assigned to checklists</td>
+<td style="text-align: left;">complete set of variables from the eBird database including checklist comments, species comments, breeding codes, etc.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">format is easier to work with in R</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-<section id="sec-ebird-erd" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="sec-ebird-erd"><span class="header-section-number">1.1</span> eBird Reference Dataset (ERD)</h2>
-<p>The eBird Reference Dataset (ERD) is a subset of the full eBird database released annually, containing only semi-structured (complete checklists with effort information) traveling and stationary counts from the last 15 years. The ERD is distributed in two parts: observation data and checklist data. In the observation dataset, each row corresponds to the sighting of a single species on a checklist, including the count and any other species-level information (e.g.&nbsp;age, sex, species comments, etc.). In the checklist dataset, each row corresponds to a checklist, including the date, time, location, effort (e.g.&nbsp;distance traveled, time spent, etc.), and any additional checklist-level information (e.g.&nbsp;whether this is a complete checklist or not). These two datasets are provided in <a href="https://parquet.apache.org/">parquet format</a>, an open source standard for efficient storage and retrieval of tabular data, in the following files:</p>
+</div>
+</div>
+<p>The ERD is distributed in two parts: observation data and checklist data. In the observation dataset, each row corresponds to the sighting of a single species on a checklist, including the count and any other species-level information. In the checklist dataset, each row corresponds to a checklist, including the date, time, location, effort (e.g.&nbsp;distance traveled, time spent, etc.), and any additional checklist-level information. These two datasets are provided in <a href="https://parquet.apache.org/">parquet format</a>, an open source standard for efficient storage and retrieval of tabular data, in the following files:</p>
 <pre><code>data/ebird_observations_chile_2021.parquet
 data/ebird_checklists_chile_2021.parquet</code></pre>
 <p>Let’s start by reading these two datasets into R using the <code>arrow</code> package and exploring them. We’ll start with the checklist dataset.</p>
@@ -768,13 +803,13 @@ Solution
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(chutap1_zf)</span>
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 186906</span></span>
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(chutap1_sampled)</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 77249</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 77176</span></span>
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co"># how has prevalence changed</span></span>
 <span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(chutap1_zf<span class="sc">$</span>obs_detected)</span>
 <span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.0518</span></span>
 <span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(chutap1_sampled<span class="sc">$</span>obs_detected)</span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.0734</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.0726</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>So, after sampling, we’re left with 41% of the observations we started with, but the spatial and temporal bias has been significantly reduced.</p>
 <p>We now have the data and tools necessary to model relative abundance using eBird data, which will be the focus of <a href="abundance.html">Lesson&nbsp;<span>2</span></a>.</p>

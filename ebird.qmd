@@ -14,15 +14,22 @@ Let's compare two eBird checklists: an [incidental observation with missing coun
 
 This lesson will focus on the eBird Reference Dataset (ERD), the collection of semi-structured eBird data used by the eBird Status and Trends team for modeling species distributions and relative abundance. A subset of this dataset for Chile was provided in the data package for this workshop. In the following sections we'll provide an introduction to the ERD, describe the associated prediction grid used to make predictions across space, and highlight some of the challenges associated with using eBird data for analysis.
 
+## eBird Reference Dataset (ERD) {#sec-ebird-erd}
+
+The eBird Reference Dataset (ERD) is a subset of the full eBird database created annually for Status and Trends modeling. Only semi-structured (complete checklists with effort information) traveling and stationary counts from the last 15 years are included in the ERD and we assign a set of environmental variables assigned to checklist.
+
 ::: {.callout-tip}
 ## Tip
 
-This workshop will only cover the eBird Reference Dataset (ERD), a subset of the eBird database generated annually by the eBird Status and Trends team. For access to the full eBird dataset updated monthly, you'll need to work with the [eBird Basic Dataset (EBD)](https://science.ebird.org/en/use-ebird-data/download-ebird-data-products). This dataset is more challenging to work with and does not contain any habitat variables, but it is more current and complete. For details on working with the EBD consult the [eBird Best Practices book](https://ebird.github.io/ebird-best-practices).
+This workshop will only cover the eBird Reference Dataset (ERD). For access to the full eBird dataset updated monthly, you'll need to work with the [eBird Basic Dataset (EBD)](https://science.ebird.org/en/use-ebird-data/download-ebird-data-products). For details on working with the EBD consult the [eBird Best Practices book](https://ebird.github.io/ebird-best-practices). Some of the advantages and disadvantages of the two datasts are:
+
+```{r}
+#| echo: false
+knitr::kable(readr::read_csv("data-raw/erd-ebd-comparison.csv"), escape = FALSE)
+```
 :::
 
-## eBird Reference Dataset (ERD) {#sec-ebird-erd}
-
-The eBird Reference Dataset (ERD) is a subset of the full eBird database released annually, containing only semi-structured (complete checklists with effort information) traveling and stationary counts from the last 15 years. The ERD is distributed in two parts: observation data and checklist data. In the observation dataset, each row corresponds to the sighting of a single species on a checklist, including the count and any other species-level information (e.g. age, sex, species comments, etc.). In the checklist dataset, each row corresponds to a checklist, including the date, time, location, effort (e.g. distance traveled, time spent, etc.), and any additional checklist-level information (e.g. whether this is a complete checklist or not). These two datasets are provided in [parquet format](https://parquet.apache.org/), an open source standard for efficient storage and retrieval of tabular data, in the following files:
+The ERD is distributed in two parts: observation data and checklist data. In the observation dataset, each row corresponds to the sighting of a single species on a checklist, including the count and any other species-level information. In the checklist dataset, each row corresponds to a checklist, including the date, time, location, effort (e.g. distance traveled, time spent, etc.), and any additional checklist-level information. These two datasets are provided in [parquet format](https://parquet.apache.org/), an open source standard for efficient storage and retrieval of tabular data, in the following files:
 
 ```
 data/ebird_observations_chile_2021.parquet
