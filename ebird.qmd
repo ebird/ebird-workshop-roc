@@ -176,7 +176,7 @@ plot(ne_country_lines, col = "#ffffff", lwd = 1.5, add = TRUE)
 # ebird observations
 # all
 plot(chutap1_sf,
-     pch = 19, cex = 0.1, col = scales::alpha("#555555", 0.25),
+     pch = 19, cex = 0.1, col = scales::alpha("#555555", 4),
      add = TRUE)
 # detection
 plot(filter(chutap1_sf, obs_detected == 1),

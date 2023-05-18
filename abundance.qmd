@@ -66,7 +66,7 @@ Next let's subset the data to only observations from January and February, summe
 checklists <- checklists %>% 
   filter(
     # last 10 years of data
-    year >= 2013,
+    year >= 2007,
     # jan-feb
     day_of_year >= 1, day_of_year <= 59,
     # effort filters
@@ -531,7 +531,7 @@ in_region <- pred_grid_all %>%
 pred_grid <- semi_join(pred_grid_all, in_region, by = "srd_id")
 ```
 
-The prediction grid only includes values for the environmental variables, so to make predictions we'll need to add effort variables to this prediction grid. We'll make predictions for a **standard eBird checklist**: a 1 km, 2 hour traveling count at the peak time of day for detecting this species. Finally, we'll make these predictions for Janurary 31, 2021, the middle of our January-February focal window for the latest year for which we have eBird data.
+The prediction grid only includes values for the environmental variables, so to make predictions we'll need to add effort variables to this prediction grid. We'll make predictions for a **standard eBird checklist**: a 2 km, 1 hour traveling count at the peak time of day for detecting this species. Finally, we'll make these predictions for Janurary 31, 2021, the middle of our January-February focal window for the latest year for which we have eBird data.
 
 To find the time of day with the highest detection probability, we can look for the peak of the partial dependence plot.
 
@@ -562,9 +562,9 @@ pred_grid_eff <- pred_grid %>%
          day_of_year = 31,
          solar_noon_diff_mid = -6,
          is_stationary = 0,
-         effort_hours = 2,
-         effort_distance_km = 1,
-         effort_speed_kmph = 0.5,
+         effort_hours = 1,
+         effort_distance_km = 2,
+         effort_speed_kmph = 2,
          number_observers = 1)
 ```
 
