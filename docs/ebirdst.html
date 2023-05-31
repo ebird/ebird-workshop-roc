@@ -519,7 +519,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>To avoid any issues resulting from all participants downloading data over a slow internet connection at the same time, for the remainder of this lesson we’ll use data included in the <a href="index.html#sec-intro-data">data package for this workshop</a>. These data packages should be in the <code>data/ebirst-data/</code> subdirectory of your RStudio project. To find the path to the data for a particular species using a non-standard download location, use</p>
+<p>To avoid any issues resulting from all participants downloading data over a slow internet connection at the same time, for the remainder of this lesson we’ll use data included in the <a href="#sec-intro-data">data package for this workshop</a>. These data packages should be in the <code>data/ebirst-data/</code> subdirectory of your RStudio project. To find the path to the data for a particular species using a non-standard download location, use</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="fu">get_species_path</span>(<span class="st">"Green-backed Firecrown"</span>, <span class="at">path =</span> <span class="st">"data/ebirdst-data/"</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>path</span>
@@ -564,9 +564,9 @@ Tip
 <span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; min values  :       0.00,        0.0,       0.00,       0.00,       0.00,        0.0, ... </span></span>
 <span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; max values  :       4.19,        4.9,       4.23,       4.13,       4.84,        5.4, ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We often refer to these raster objects as “weekly cubes” (e.g.&nbsp;the “weekly abundance cube”). Notice that the cubes contains 52 layers, corresponding to the weeks of the year. We can use the function <code>parse_raster_dates()</code> to see the dates associated with each layer.</p>
+<p>We often refer to these raster objects as “weekly cubes” (e.g.&nbsp;the “weekly abundance cube”). Notice that the cubes contains 52 layers, corresponding to the weeks of the year. The layer names are the dates associated with the mid-point of each week.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parse_raster_dates</span>(abd_median_hr)</span>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.Date</span>(<span class="fu">names</span>(abd_median_hr))</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] "2021-01-04" "2021-01-11" "2021-01-18" "2021-01-25" "2021-02-01"</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [6] "2021-02-08" "2021-02-15" "2021-02-22" "2021-03-01" "2021-03-08"</span></span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [11] "2021-03-15" "2021-03-22" "2021-03-29" "2021-04-05" "2021-04-12"</span></span>
@@ -700,7 +700,7 @@ Solution
 <p>We can also subset the weekly cube to a range of weeks. For example, let’s subset to only the estimates for weeks in May, then take the average across the weeks.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># determine which dates we want to include</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>week_dates <span class="ot">&lt;-</span> <span class="fu">parse_raster_dates</span>(abd_weekly)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>week_dates <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="fu">names</span>(abd_weekly))</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>start_date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">"2021-05-01"</span>)</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>end_date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">"2021-05-31"</span>)</span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>week_in_may <span class="ot">&lt;-</span> week_dates <span class="sc">&gt;=</span> start_date <span class="sc">&amp;</span> week_dates <span class="sc">&lt;=</span> end_date</span>
@@ -769,19 +769,20 @@ Checkpoint
 <h2 data-number="3.6" class="anchored" data-anchor-id="sec-ebirdst-applications"><span class="header-section-number">3.6</span> Applications</h2>
 <p>The remainder of the workshop will work through three example applications using the eBird Status data products:</p>
 <ol type="1">
-<li><a href="#sec-ebirdst-applications-trajectories">Trajectories</a>: chart the change in relative abundance and percent of population for a single species throughout the year for a specific location.</li>
+<li><a href="#sec-ebirdst-applications-trajectories">Trajectories</a>: chart the change in the percent of the population in a region throughout the year for a set of species.</li>
 <li><a href="#sec-ebirdst-applications-stats">Regional statistics</a>: calculate the proportion of the breeding population falling within protected areas for a set of species.</li>
 <li><a href="#sec-ebirdst-applications-prioritization">Prioritization</a>: use eBird Status data products to identify important sites for protection of a set of species.</li>
 </ol>
 <section id="sec-ebirdst-applications-trajectories" class="level3" data-number="3.6.1">
 <h3 data-number="3.6.1" class="anchored" data-anchor-id="sec-ebirdst-applications-trajectories"><span class="header-section-number">3.6.1</span> Trajectories</h3>
-<p>In this application, we’ll look at the change in Green-backed Firecrown abundance throughout the year in Los Lagos, Chile. Let’s start by loading the medium resolution weekly relative abundance cubes (median and confidence intervals) as well as a boundary polygon for Los Lagos.</p>
+<p>In this application, we’ll look at the change in for populations for two species throughout the year in Los Lagos, Chile. We’ll consider Green-backed Firecrown and Patagonian Tyrant, two migrant species that are nearly endemic to Chile (data for both species are in the workshop data package). When comparing multiple species, or a single species between different seasons, as is the case here, it’s important to consider the proportion of population rather than relative abundance to mitigate the impact of differences in detectability between seasons and speces.</p>
+<p>Let’s start by loading the medium resolution weekly proportion of population cubes for these species as well as a boundary polygon for Los Lagos.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># relative abundance cubes, median and confidence intervals</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="fu">get_species_path</span>(<span class="st">"grbfir1"</span>, <span class="at">path =</span> <span class="st">"data/ebirdst-data/"</span>)</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>abd_median <span class="ot">&lt;-</span> <span class="fu">load_raster</span>(path, <span class="at">metric =</span> <span class="st">"median"</span>, <span class="at">resolution =</span> <span class="st">"mr"</span>)</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>abd_lower <span class="ot">&lt;-</span> <span class="fu">load_raster</span>(path, <span class="at">metric =</span> <span class="st">"lower"</span>, <span class="at">resolution =</span> <span class="st">"mr"</span>)</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>abd_upper <span class="ot">&lt;-</span> <span class="fu">load_raster</span>(path, <span class="at">metric =</span> <span class="st">"upper"</span>, <span class="at">resolution =</span> <span class="st">"mr"</span>)</span>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># proportion of population cubes</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>pop_grbfir1 <span class="ot">&lt;-</span> <span class="fu">get_species_path</span>(<span class="st">"grbfir1"</span>, <span class="at">path =</span> <span class="st">"data/ebirdst-data/"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">load_raster</span>(<span class="at">product =</span> <span class="st">"percent-population"</span>, <span class="at">resolution =</span> <span class="st">"mr"</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>pop_pattyr2 <span class="ot">&lt;-</span> <span class="fu">get_species_path</span>(<span class="st">"pattyr2"</span>, <span class="at">path =</span> <span class="st">"data/ebirdst-data/"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">load_raster</span>(<span class="at">product =</span> <span class="st">"percent-population"</span>, <span class="at">resolution =</span> <span class="st">"mr"</span>)</span>
 <span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co"># los lagos boundary, projected to match the raster data</span></span>
 <span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>los_lagos <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/gis-data.gpkg"</span>, <span class="st">"ne_states"</span>) <span class="sc">%&gt;%</span> </span>
@@ -789,36 +790,41 @@ Checkpoint
 <span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="fu">crs</span>(abd_seasonal)) <span class="sc">%&gt;%</span> </span>
 <span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_geometry</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Now, we’ll use the R package <code>exactextractr</code> to calculate the mean value for each layer within Los Lagos.</p>
+<p>Now, we’ll use the R package <code>exactextractr</code> to calculate the sum of the proportions for each species within Los Lagos.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mean abundance within los lagos</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>median_traj <span class="ot">&lt;-</span> <span class="fu">exact_extract</span>(abd_median, los_lagos, <span class="at">fun =</span> <span class="st">"mean"</span>)</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>lower_traj <span class="ot">&lt;-</span> <span class="fu">exact_extract</span>(abd_lower, los_lagos, <span class="at">fun =</span> <span class="st">"mean"</span>)</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>upper_traj <span class="ot">&lt;-</span> <span class="fu">exact_extract</span>(abd_upper, los_lagos, <span class="at">fun =</span> <span class="st">"mean"</span>)</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co"># combine median, lower, and upper together</span></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>trajectory <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">week =</span> <span class="fu">parse_raster_dates</span>(abd_median),</span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">median =</span> <span class="fu">as.numeric</span>(median_traj[<span class="dv">1</span>, ]),</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">lower =</span> <span class="fu">as.numeric</span>(lower_traj[<span class="dv">1</span>, ]),</span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">upper =</span> <span class="fu">as.numeric</span>(upper_traj[<span class="dv">1</span>, ]))</span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(trajectory)</span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         week median lower upper</span></span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 2021-01-04  0.766 0.729 0.807</span></span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 2021-01-11  0.859 0.818 0.900</span></span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 2021-01-18  0.946 0.907 0.989</span></span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 2021-01-25  1.015 0.971 1.061</span></span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 2021-02-01  1.091 1.045 1.138</span></span>
-<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 2021-02-08  1.182 1.130 1.237</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sum within los lagos</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co"># firecrown</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>traj_grbfir1 <span class="ot">&lt;-</span> <span class="fu">exact_extract</span>(pop_grbfir1, los_lagos, <span class="at">fun =</span> <span class="st">"sum"</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>traj_grbfir1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">species =</span> <span class="st">"Green-backed Firecrown"</span>,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">week =</span> <span class="fu">as.Date</span>(<span class="fu">names</span>(pop_grbfir1)),</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">prop_pop =</span> <span class="fu">as.numeric</span>(traj_grbfir1[<span class="dv">1</span>, ]))</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co"># tyrant</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>traj_pattyr2 <span class="ot">&lt;-</span> <span class="fu">exact_extract</span>(pop_pattyr2, los_lagos, <span class="at">fun =</span> <span class="st">"sum"</span>)</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>traj_pattyr2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">species =</span> <span class="st">"Patagonian Tyrant"</span>,</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>                           <span class="at">week =</span> <span class="fu">as.Date</span>(<span class="fu">names</span>(pop_pattyr2)),</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>                           <span class="at">prop_pop =</span> <span class="fu">as.numeric</span>(traj_pattyr2[<span class="dv">1</span>, ]))</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="co"># combine</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>trajectories <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(traj_grbfir1, traj_pattyr2)</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(trajectories)</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                  species       week prop_pop</span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 Green-backed Firecrown 2021-01-04    0.245</span></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 Green-backed Firecrown 2021-01-11    0.243</span></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 Green-backed Firecrown 2021-01-18    0.249</span></span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 Green-backed Firecrown 2021-01-25    0.245</span></span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 Green-backed Firecrown 2021-02-01    0.240</span></span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 Green-backed Firecrown 2021-02-08    0.238</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Finally we can plot the trajectories with confidence intervals.</p>
+<p>Finally we can plot the trajectories.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(trajectory, <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> median)) <span class="sc">+</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lower, <span class="at">ymax =</span> upper), <span class="at">alpha =</span> <span class="fl">0.3</span>)<span class="sc">+</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(trajectories, <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> prop_pop, <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Week"</span>, </span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Mean relative abundance"</span>,</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Weekly Green-backed Firecrown trajectory in Las Lagos"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"% of population"</span>,</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Weekly % of population trajectory in Las Lagos"</span>,</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">

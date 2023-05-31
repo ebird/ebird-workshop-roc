@@ -44,18 +44,17 @@ set.seed(1)
 # detections
 observations <- read_parquet("data/ebird_observations_chile_2021.parquet") %>% 
   filter(species_code == "chutap1") %>% 
-  select(checklist_id, valid, obs_count) %>% 
-  mutate(obs_detected = 1L)
+  select(checklist_id, valid, obs_detected, obs_count)
 
 # zero filled checklists
 checklists <- read_parquet("data/ebird_checklists_chile_2021.parquet") %>%
   left_join(observations, by = "checklist_id") %>% 
-  filter(is.na(valid) | valid == 1) %>% 
+  filter(is.na(valid) | valid) %>% 
   mutate(
     # checklist not in the observations dataset are non-detections
-    obs_detected = coalesce(obs_detected == 1, 0L),
+    obs_detected = coalesce(obs_detected, 0L),
     # non-detections correspond to a count of 0
-    obs_count = ifelse(obs_detected == 1, obs_count, 0)
+    obs_count = ifelse(obs_detected == 1L, obs_count, 0)
   )
 ```
 
@@ -520,7 +519,9 @@ Using the prediction grid described in @sec-ebird-pred, we can estimate relative
 ```{r}
 #| label: abundance-predict-read
 pred_grid_all <- read_parquet("data/ebird_prediction-grid_chile_2021.parquet")
-raster_template <- rast("data/prediction-grid_template.tif")
+raster_template <- rast("data/prediction-grid_template.tif") %>% 
+  # crop raster to study region
+  crop(st_transform(study_region, crs = crs(.)))
 
 # subset to the three regions we're focusing on
 in_region <- pred_grid_all %>%

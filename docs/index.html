@@ -191,7 +191,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
   <ul class="collapse">
   <li><a href="#sec-intro-setup" id="toc-sec-intro-setup" class="nav-link" data-scroll-target="#sec-intro-setup">Setup</a></li>
-  <li><a href="#sec-intro-data" id="toc-sec-intro-data" class="nav-link" data-scroll-target="#sec-intro-data">Data</a></li>
   <li><a href="#sec-intro-tidyverse" id="toc-sec-intro-tidyverse" class="nav-link" data-scroll-target="#sec-intro-tidyverse">Tidyverse</a></li>
   </ul></li>
   </ul>
@@ -219,7 +218,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="introduction" class="level1 unnumbered">
 <h1 class="unnumbered">Introduction</h1>
-<p>The contents of this website comprise the notes for a workshop on best practices for using <a href="https://ebird.org/home">eBird</a> data and <a href="https://science.ebird.org/en/status-and-trends">eBird Status</a> data products presented to <a href="https://www.redobservadores.cl/">Red de Observadores de Aves y Vida Silvestre de Chile (ROC)</a>. The workshop is divided into three lessons covering:</p>
+<p>The contents of this website comprise the notes for a workshop on best practices for using <a href="https://ebird.org/home">eBird</a> data and <a href="https://science.ebird.org/en/status-and-trends">eBird Status</a> data products presented to <a href="https://www.redobservadores.cl/">Red de Observadores de Aves y Vida Silvestre de Chile (ROC)</a> in May 2023 in Santiago, Chile. The workshop is divided into three lessons covering:</p>
 <ol type="1">
 <li><a href="./ebird.html">eBird Data</a>: introduction to the eBird Reference Dataset (ERD), challenges associated with using eBird data for analysis, and best practices for preparing eBird data for modeling.</li>
 <li><a href="./abundance.html">Modeling Relative Abundance</a>: best practices for using eBird data to model encounter rate, count, and relative abundance for a species.</li>
@@ -229,10 +228,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="sec-intro-setup">Setup</h2>
 <p>This workshop is intended to be interactive. All examples are written in the R programming language, and the instructor will work through the examples in real time, while the attendees are encouraged following along by writing the same code. To ensure we can avoid any unnecessary delays, please follow these setup instructions prior to the workshop</p>
 <ol type="1">
-<li><a href="https://ebird.org/data/download">Request access</a> to raw eBird data.</li>
+<li><a href="https://drive.google.com/file/d/1v2VhWixLEir69XNPfD2nfOBytHaPtX6b/view?usp=share_link">Download the data package</a> for this workshop. This data package contains a variety of datasets used throughout the three lessons.</li>
 <li><a href="https://science.ebird.org/en/status-and-trends/download-data">Request access</a> to the eBird Status data products.</li>
 <li><a href="https://cloud.r-project.org/">Download</a> and install the latest version of R. <strong>You must have R version 4.0.0 or newer to follow along with this workshop</strong></li>
 <li><a href="https://posit.co/download/rstudio-desktop/#download">Download</a> and install the latest version of RStudio. RStudio is not required for this workshop; however, the instructors will be using it and you may find it easier to following along if you’re working in the same environment.</li>
+<li><a href="https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects">Create an RStudio project</a> for working through the examples in this workshop. Move all the files from the data package so they’re in a <code>data/</code> subdirectory of the project directory.</li>
 <li>The lessons in this workshop use a variety of R packages. To install all the necessary packages, run the following code</li>
 </ol>
 <div class="cell" data-layout-align="center">
@@ -241,13 +241,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"ebird/ebird-best-practices"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<ol start="6" type="1">
+<ol start="7" type="1">
 <li>Ensure all packages are updated to their most recent versions by clicking on the Update button on the Packages tab in RStudio.</li>
 </ol>
-</section>
-<section id="sec-intro-data" class="level2">
-<h2 class="anchored" data-anchor-id="sec-intro-data">Data</h2>
-<p>To follow along with the lessons in the workshop you’ll need to download the workshop data package. This data package contains a variety of datasets used throughout the three lessons. You should have received an email with a link to download a zip file from Google Drive. Download all files in the folder, <a href="https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects">create a new RStudio project</a>, unzip the data package, and place all the files in the <code>data/</code> subdirectory of the project.</p>
 </section>
 <section id="sec-intro-tidyverse" class="level2">
 <h2 class="anchored" data-anchor-id="sec-intro-tidyverse">Tidyverse</h2>

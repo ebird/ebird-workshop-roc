@@ -29,7 +29,9 @@ knitr::kable(readr::read_csv("data-raw/erd-ebd-comparison.csv"), escape = FALSE)
 ```
 :::
 
-The ERD is distributed in two parts: observation data and checklist data. In the observation dataset, each row corresponds to the sighting of a single species on a checklist, including the count and any other species-level information. In the checklist dataset, each row corresponds to a checklist, including the date, time, location, effort (e.g. distance traveled, time spent, etc.), and any additional checklist-level information. These two datasets are provided in [parquet format](https://parquet.apache.org/), an open source standard for efficient storage and retrieval of tabular data, in the following files:
+The ERD is distributed in two parts: observation data and checklist data. In the observation dataset, each row corresponds to the sighting of a single species on a checklist, including the count and any other species-level information. In the checklist dataset, each row corresponds to a checklist, including the date, time, location, effort (e.g. distance traveled, time spent, etc.), and any additional checklist-level information. 
+
+For this workshop, and extract of the ERD is provided for Chile in the workshop data package. The observations and checklsits datasets are provided in [parquet format](https://parquet.apache.org/), an open source standard for efficient storage and retrieval of tabular data. If you haven't already done so, following the [instructions in the Introduction](#sec-intro-setup) to create an RStudio project and download the workshop data package. The parquet files should be located at:
 
 ```
 data/ebird_observations_chile_2021.parquet
@@ -84,9 +86,9 @@ This is a much simpler dataset with only five columns:
 
 - `checklist_id`: unique identifier for the checklist that this observation belongs to. Allows joining the observation data to the checklist data.
 - `species_code`: unique identifier for the species that this observation was made for.
-- `only_presence_reported`: a binary variable indicating if a count of the number of individuals seen was provided for the species (0) or if an "X" was used to indicate the species was detected but not counted (1).
-- `valid`: a binary variable indicating is the observation was determined to be valid (1) or invalid (0) by the eBird reviewers.
-- `obs_count`: count of the number of individuals or an `NA` if no count was provided.
+- `valid`: a binary variable indicating is the observation was determined to be valid (`TRUE`) or invalid (`FALSE`) by the eBird reviewers.
+- `obs_detected`: a binary variable indicating if the species was detected (1) or not detected (0). Since this is a dataset of observations only, `obs_detected` is always 1; however, having this variable will become useful when we join to the checklist dataset in the next section.
+- `obs_count`: count of the number of individuals or an `NA` if no count was provided (if an "X" was entered for count on the eBird checklist).
 
 ::: {.callout-tip}
 ## Tip
@@ -110,8 +112,7 @@ We refer to the process of producing detection/non-detection data as "zero-filli
 #| label: ebird-zf-det
 chutap1_detections <- observations %>% 
   filter(species_code == "chutap1") %>% 
-  select(checklist_id, valid, obs_count) %>% 
-  mutate(obs_detected = 1L)
+  select(checklist_id, valid, obs_detected, obs_count)
 ```
 
 Next join this set of detections to the complete set of checklists, including detections and non-detections.
@@ -120,7 +121,7 @@ Next join this set of detections to the complete set of checklists, including de
 #| label: ebird-zf-join
 chutap1_all <- left_join(checklists, chutap1_detections, by = "checklist_id") %>%
   select(checklist_id, latitude, longitude, year, day_of_year,
-         valid, obs_count, obs_detected)
+         valid, obs_detected, obs_count)
 head(chutap1_all)
 ```
 
@@ -138,7 +139,7 @@ chutap1_zf <- chutap1_all %>%
   )
 ```
 
-We can now, for example, make a map of Chucao Tapaculo observations in the Chilean region of Los Lagos We'll use spatial data that was prepared in advance and provided in the data package.
+We can now, for example, make a map of Chucao Tapaculo observations in the Chilean region of Los Lagos. We'll use spatial data that was prepared in advance and provided in the data package.
 
 ```{r}
 #| label: ebird-zf-map
@@ -207,7 +208,6 @@ For example, to produce detection/non-detection data for [Thorn-tailed Rayadito]
 #| label: sec-ebird-zf-sol
 thtray1_zf <- observations %>% 
   filter(species_code == "thtray1") %>% 
-  mutate(obs_detected = 1) %>% 
   left_join(checklists, ., by = "checklist_id") %>% 
   filter(is.na(valid) | valid == 1) %>% 
   mutate(obs_detected = coalesce(obs_detected, 0),
@@ -237,7 +237,7 @@ raster_template <- rast("data/prediction-grid_template.tif")
 raster_template
 ```
 
-This is a global 2.96km by 2.96km square grid in a equal area projection. We can use the `terra` function `rasterize` to insert values from the prediction grid into the template for mapping. For example, let's make a raster dataset of percent cover of evergreen broadleaf forest (`mcd12q1_lccs1_fs_c12_1500_pland`).
+This is a global 2.96km by 2.96km square grid in an equal area projection. We can use the `terra` function `rasterize` to insert values from the prediction grid into the template for mapping. For example, let's make a raster dataset of percent cover of evergreen broadleaf forest (`mcd12q1_lccs1_fs_c12_1500_pland`).
 
 ```{r}
 #| label: ebird-pred-rasterize

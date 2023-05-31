@@ -217,11 +217,11 @@ abd_median_hr <- load_raster(path, product = "abundance", resolution = "hr")
 print(abd_median_hr)
 ```
 
-We often refer to these raster objects as "weekly cubes" (e.g. the "weekly abundance cube"). Notice that the cubes contains 52 layers, corresponding to the weeks of the year. We can use the function `parse_raster_dates()` to see the dates associated with each layer.
+We often refer to these raster objects as "weekly cubes" (e.g. the "weekly abundance cube"). Notice that the cubes contains 52 layers, corresponding to the weeks of the year. The layer names are the dates associated with the mid-point of each week.
 
 ```{r}
 #| label: ebirdst-load-weekly-parse
-parse_raster_dates(abd_median_hr)
+as.Date(names(abd_median_hr))
 ```
 
 As another example, we could load the low resolution upper and lower abundance confidence intervals.
@@ -310,7 +310,7 @@ We can also subset the weekly cube to a range of weeks. For example, let's subse
 ```{r}
 #| label: ebirdst-explore-mean
 # determine which dates we want to include
-week_dates <- parse_raster_dates(abd_weekly)
+week_dates <- as.Date(names(abd_weekly))
 start_date <- as.Date("2021-05-01")
 end_date <- as.Date("2021-05-31")
 week_in_may <- week_dates >= start_date & week_dates <= end_date
@@ -355,21 +355,24 @@ Let's take a break before proceeding onto some more realistic applications of th
 
 The remainder of the workshop will work through three example applications using the eBird Status data products:
 
-1. [Trajectories](#sec-ebirdst-applications-trajectories): chart the change in relative abundance and percent of population for a single species throughout the year for a specific location.
+1. [Trajectories](#sec-ebirdst-applications-trajectories): chart the change in the percent of the population in a region throughout the year for a set of species.
 2. [Regional statistics](#sec-ebirdst-applications-stats): calculate the proportion of the breeding population falling within protected areas for a set of species.
 3. [Prioritization](#sec-ebirdst-applications-prioritization): use eBird Status data products to identify important sites for protection of a set of species.
 
 ### Trajectories {#sec-ebirdst-applications-trajectories}
 
-In this application, we'll look at the change in Green-backed Firecrown abundance throughout the year in Los Lagos, Chile. Let's start by loading the medium resolution weekly relative abundance cubes (median and confidence intervals) as well as a boundary polygon for Los Lagos.
+In this application, we'll look at the change in for populations for two species throughout the year in Los Lagos, Chile. We'll consider  Green-backed Firecrown and Patagonian Tyrant, two migrant
+species that are nearly endemic to Chile (data for both species are in the workshop data package). When comparing multiple species, or a single species between different seasons, as is the case here, it's important to consider the proportion of population rather than relative abundance to mitigate the impact of differences in detectability between seasons and speces.
+
+Let's start by loading the medium resolution weekly proportion of population cubes for these species as well as a boundary polygon for Los Lagos.
 
 ```{r}
 #| label: ebirdst-applications-trajectories-data
-# relative abundance cubes, median and confidence intervals
-path <- get_species_path("grbfir1", path = "data/ebirdst-data/")
-abd_median <- load_raster(path, metric = "median", resolution = "mr")
-abd_lower <- load_raster(path, metric = "lower", resolution = "mr")
-abd_upper <- load_raster(path, metric = "upper", resolution = "mr")
+# proportion of population cubes
+pop_grbfir1 <- get_species_path("grbfir1", path = "data/ebirdst-data/") %>% 
+  load_raster(product = "percent-population", resolution = "mr")
+pop_pattyr2 <- get_species_path("pattyr2", path = "data/ebirdst-data/") %>% 
+  load_raster(product = "percent-population", resolution = "mr")
 
 # los lagos boundary, projected to match the raster data
 los_lagos <- read_sf("data/gis-data.gpkg", "ne_states") %>% 
@@ -378,34 +381,39 @@ los_lagos <- read_sf("data/gis-data.gpkg", "ne_states") %>%
   st_geometry()
 ```
 
-Now, we'll use the R package `exactextractr` to calculate the mean value for each layer within Los Lagos.
+Now, we'll use the R package `exactextractr` to calculate the sum of the proportions for each species within Los Lagos.
 
 ```{r}
 #| label: ebirdst-applications-trajectories-summarize
-# mean abundance within los lagos
-median_traj <- exact_extract(abd_median, los_lagos, fun = "mean")
-lower_traj <- exact_extract(abd_lower, los_lagos, fun = "mean")
-upper_traj <- exact_extract(abd_upper, los_lagos, fun = "mean")
+# sum within los lagos
+# firecrown
+traj_grbfir1 <- exact_extract(pop_grbfir1, los_lagos, fun = "sum")
+traj_grbfir1 <- data.frame(species = "Green-backed Firecrown",
+                           week = as.Date(names(pop_grbfir1)),
+                           prop_pop = as.numeric(traj_grbfir1[1, ]))
+# tyrant
+traj_pattyr2 <- exact_extract(pop_pattyr2, los_lagos, fun = "sum")
+traj_pattyr2 <- data.frame(species = "Patagonian Tyrant",
+                           week = as.Date(names(pop_pattyr2)),
+                           prop_pop = as.numeric(traj_pattyr2[1, ]))
 
-# combine median, lower, and upper together
-trajectory <- data.frame(
-  week = parse_raster_dates(abd_median),
-  median = as.numeric(median_traj[1, ]),
-  lower = as.numeric(lower_traj[1, ]),
-  upper = as.numeric(upper_traj[1, ]))
-head(trajectory)
+# combine
+trajectories <- bind_rows(traj_grbfir1, traj_pattyr2)
+head(trajectories)
 ```
 
-Finally we can plot the trajectories with confidence intervals.
+Finally we can plot the trajectories.
 
 ```{r}
 #| label: ebirdst-applications-trajectories-plot
-ggplot(trajectory, aes(x = week, y = median)) +
-  geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.3)+
+ggplot(trajectories, aes(x = week, y = prop_pop, color = species)) +
   geom_line() +
+  scale_y_continuous(labels = scales::percent) +
   labs(x = "Week", 
-       y = "Mean relative abundance",
-       title = "Weekly Green-backed Firecrown trajectory in Las Lagos")
+       y = "% of population",
+       title = "Weekly % of population trajectory in Las Lagos",
+       color = NULL) +
+  theme(legend.position = "bottom")
 ```
 
 ### Regional statistics {#sec-ebirdst-applications-stats}

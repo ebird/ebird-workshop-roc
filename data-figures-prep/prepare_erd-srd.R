@@ -13,6 +13,9 @@ output_dir <- "/ocean/projects/deb200005p/mstrimas/chile-data/"
 temp_dir <- "/local/"
 dir_create(output_dir)
 
+# sensitive species to remove from the erd
+sensitive_species <- c("chiwoo1")
+
 # chile boundary
 chile_boundary <- ne_download(scale = 10, category = "cultural",
                               type = "admin_0_countries",
@@ -38,20 +41,22 @@ checklists <- tbl(con, "checklists") %>%
          latitude > !!bb[["ymin"]], latitude < !!bb[["ymax"]])
 
 # observations from chile
-tic()
+tic("Extract observations")
 observations <- tbl(con, "obs") %>%
   inner_join(checklists, by = "checklist_id") %>%
-  select(checklist_id, species_code,
-         only_presence_reported, valid,
-         obs_count) %>%
-  mutate(only_presence_reported = only_presence_reported == 1,
-         valid = valid == 1,
-         obs_count = ifelse(only_presence_reported, NA_integer_, as.integer(obs_count))) %>%
-  collect()
+  filter(only_presence_reported == 1 | obs_count > 0) %>%
+  collect() %>%
+  mutate(valid = (valid == 1),
+         obs_detected = 1L,
+         obs_count = ifelse(only_presence_reported == 1,
+                            NA_integer_, as.integer(obs_count))) %>%
+  select(checklist_id, species_code, valid, obs_detected, obs_count) %>%
+  # drop sensitive species
+  filter(!species_code %in% sensitive_species)
 toc()
 
 # collect checklists
-tic()
+tic("Extract checklists")
 checklists <- checklists %>%
   select(checklist_id, observer_id,
          loc_id, longitude, latitude, is_stationary,
