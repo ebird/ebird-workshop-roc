@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.3.353">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -18,9 +18,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -47,43 +48,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -132,11 +103,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">eBird Data</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ebird.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">eBird Data</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -144,55 +120,60 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">eBird Best Practices Workshop (ROC)</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/ebird/ebird-workshop-roc/" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/ebird/ebird-workshop-roc/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Introduction</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ebird.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">eBird Data</span></a>
+  <a href="./ebird.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">eBird Data</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./abundance.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Modeling Relative Abundance</span></a>
+  <a href="./abundance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Modeling Relative Abundance</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ebirdst.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">eBird Status Data Products</span></a>
+  <a href="./ebirdst.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">eBird Status Data Products</span></span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-ebird-erd" id="toc-sec-ebird-erd" class="nav-link active" data-scroll-target="#sec-ebird-erd"><span class="toc-section-number">1.1</span>  eBird Reference Dataset (ERD)</a></li>
-  <li><a href="#sec-ebird-zf" id="toc-sec-ebird-zf" class="nav-link" data-scroll-target="#sec-ebird-zf"><span class="toc-section-number">1.2</span>  Zero-filling eBird data</a></li>
-  <li><a href="#sec-ebird-pred" id="toc-sec-ebird-pred" class="nav-link" data-scroll-target="#sec-ebird-pred"><span class="toc-section-number">1.3</span>  Prediction grid</a></li>
-  <li><a href="#sec-ebird-bias" id="toc-sec-ebird-bias" class="nav-link" data-scroll-target="#sec-ebird-bias"><span class="toc-section-number">1.4</span>  Spatial and temporal bias</a></li>
+  <li><a href="#sec-ebird-erd" id="toc-sec-ebird-erd" class="nav-link active" data-scroll-target="#sec-ebird-erd"><span class="header-section-number">1.1</span> eBird Reference Dataset (ERD)</a></li>
+  <li><a href="#sec-ebird-zf" id="toc-sec-ebird-zf" class="nav-link" data-scroll-target="#sec-ebird-zf"><span class="header-section-number">1.2</span> Zero-filling eBird data</a></li>
+  <li><a href="#sec-ebird-pred" id="toc-sec-ebird-pred" class="nav-link" data-scroll-target="#sec-ebird-pred"><span class="header-section-number">1.3</span> Prediction grid</a></li>
+  <li><a href="#sec-ebird-bias" id="toc-sec-ebird-bias" class="nav-link" data-scroll-target="#sec-ebird-bias"><span class="header-section-number">1.4</span> Spatial and temporal bias</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/ebird/ebird-workshop-roc/edit/main/ebird.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/ebird/ebird-workshop-roc/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -201,7 +182,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-ebird" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">eBird Data</span></span></h1>
+<h1 class="title"><span id="sec-ebird" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">eBird Data</span></span></h1>
 </div>
 
 
@@ -222,12 +203,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="sec-ebird-erd" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="sec-ebird-erd"><span class="header-section-number">1.1</span> eBird Reference Dataset (ERD)</h2>
 <p>The eBird Reference Dataset (ERD) is a subset of the full eBird database created annually for Status and Trends modeling. Only semi-structured (complete checklists with effort information) traveling and stationary counts from the last 15 years are included in the ERD and we assign a set of environmental variables assigned to checklist.</p>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Tip
 </div>
 </div>
@@ -235,7 +216,7 @@ Tip
 <p>This workshop will only cover the eBird Reference Dataset (ERD). For access to the full eBird dataset updated monthly, you’ll need to work with the <a href="https://science.ebird.org/en/use-ebird-data/download-ebird-data-products">eBird Basic Dataset (EBD)</a>. For details on working with the EBD consult the <a href="https://ebird.github.io/ebird-best-practices">eBird Best Practices book</a>. Some of the advantages and disadvantages of the two datasts are:</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<table class="table table-sm table-striped">
+<table class="table table-sm table-striped small">
 <colgroup>
 <col style="width: 39%">
 <col style="width: 60%">
@@ -391,7 +372,7 @@ data/ebird_checklists_chile_2021.parquet</code></pre>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/landscape-metrics.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Example of calculating percent land cover and edge density for a 3km diamter circular neighborhood centered on a checklist location. <code>pland</code> for each class is the percent of the circle covered by that class. To calculate <code>ed</code> for each class, we add up the perimeter lengths of all patches of that class, then divide by the area of the circle.</figcaption><p></p>
+<figcaption class="figure-caption">Example of calculating percent land cover and edge density for a 3km diamter circular neighborhood centered on a checklist location. <code>pland</code> for each class is the percent of the circle covered by that class. To calculate <code>ed</code> for each class, we add up the perimeter lengths of all patches of that class, then divide by the area of the circle.</figcaption>
 </figure>
 </div>
 <p>The land and water cover variables can be challenging to interpret based on their names alone (e.g.&nbsp;<code>mcd12q1_lccs1_fs_c12_1500_pland</code>); however, these names can be looked up in the <code>ebirdst_predictors</code> data frame from the <code>ebirdst</code> package. For example, let’s look up what <code>mcd12q1_lccs1_fs_c12_1500_pland</code> corresponds to.</p>
@@ -403,12 +384,12 @@ data/ebird_checklists_chile_2021.parquet</code></pre>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;                           &lt;chr&gt;                            </span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 mcd12q1_lccs1_fs_c12_1500_pland Evergreen Broadleaf Forests PLAND</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Checkpoint
 </div>
 </div>
@@ -436,17 +417,17 @@ Checkpoint
 <li><code>obs_detected</code>: a binary variable indicating if the species was detected (1) or not detected (0). Since this is a dataset of observations only, <code>obs_detected</code> is always 1; however, having this variable will become useful when we join to the checklist dataset in the next section.</li>
 <li><code>obs_count</code>: count of the number of individuals or an <code>NA</code> if no count was provided (if an “X” was entered for count on the eBird checklist).</li>
 </ul>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>To look up the common name or scientific name of a species try appending the species code to the URL <code>https://ebird.org/species/</code>. For example, visit <a href="https://ebird.org/species/eardov1">https://ebird.org/species/eardov1</a> to look up the species code <code>eardov1</code>. This information is also available in the <code>ebird_taxonomy</code> data frame in the <code>auk</code> package.</p>
+<p>To look up the common name or scientific name of a species try appending the species code to the URL <code>https://ebird.org/species/</code>. For example, visit <a href="https://ebird.org/species/eardov1" class="uri">https://ebird.org/species/eardov1</a> to look up the species code <code>eardov1</code>. This information is also available in the <code>ebird_taxonomy</code> data frame in the <code>auk</code> package.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(ebird_taxonomy, species_code <span class="sc">==</span> <span class="st">"eardov1"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species_code, common_name, scientific_name, family)</span>
@@ -554,12 +535,12 @@ Tip
 </div>
 </div>
 </div>
-<div class="callout-caution callout callout-style-default no-icon callout-captioned">
+<div class="callout callout-style-default callout-caution no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Exercise
 </div>
 </div>
@@ -567,12 +548,12 @@ Exercise
 <p>Try producing zero-filled, detection/non-detection data for another species.</p>
 </div>
 </div>
-<div class="callout-note callout callout-style-default no-icon callout-captioned">
+<div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
@@ -765,31 +746,31 @@ Solution
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/grid-sampling_1.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">1. Take one week of eBird observations. Detections are show in <span style="color:#4daf4a"><strong>green</strong></span> and non-detections are shown in <span style="color:#555555"><strong>gray</strong></span>.</figcaption><p></p>
+<figcaption class="figure-caption">1. Take one week of eBird observations. Detections are show in <span style="color:#4daf4a"><strong>green</strong></span> and non-detections are shown in <span style="color:#555555"><strong>gray</strong></span>.</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/grid-sampling_2.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">2. Separate the detections and non-detections. In this example, there is a higher density of observations in the lower right corner of the region and the prevalence of detections is 2%.</figcaption><p></p>
+<figcaption class="figure-caption">2. Separate the detections and non-detections. In this example, there is a higher density of observations in the lower right corner of the region and the prevalence of detections is 2%.</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/grid-sampling_3.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">3. Overlay an equal area grid on top of the points, For Status and Trends we use a 3km by 3km grid.</figcaption><p></p>
+<figcaption class="figure-caption">3. Overlay an equal area grid on top of the points, For Status and Trends we use a 3km by 3km grid.</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/grid-sampling_4.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">4. Sample one checklist from each grid cell.</figcaption><p></p>
+<figcaption class="figure-caption">4. Sample one checklist from each grid cell.</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/grid-sampling_5.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">5. Recombine the detections and non-detections. The observations are much more evenly distributed in space and the prevalence of detections has increased from 2% to 20%.</figcaption><p></p>
+<figcaption class="figure-caption">5. Recombine the detections and non-detections. The observations are much more evenly distributed in space and the prevalence of detections has increased from 2% to 20%.</figcaption>
 </figure>
 </div>
 <p>The function <code>grid_sample_stratified()</code> from the <code>ebirdst</code> package is specifically designed to perform case controlled grid sampling on eBird data. For example, let’s apply this technique to the Chucao Tapaculo observations.</p>
@@ -802,13 +783,13 @@ Solution
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(chutap1_zf)</span>
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 186906</span></span>
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(chutap1_sampled)</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 77343</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 77203</span></span>
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co"># how has prevalence changed</span></span>
 <span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(chutap1_zf<span class="sc">$</span>obs_detected)</span>
 <span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.0518</span></span>
 <span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(chutap1_sampled<span class="sc">$</span>obs_detected)</span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.073</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.0731</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>So, after sampling, we’re left with 41% of the observations we started with, but the spatial and temporal bias has been significantly reduced.</p>
 <p>We now have the data and tools necessary to model relative abundance using eBird data, which will be the focus of <a href="abundance.html">Lesson&nbsp;<span>2</span></a>.</p>
@@ -844,9 +825,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -911,6 +906,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -966,6 +1047,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">eBird Best Practices Workshop (ROC)</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
   </div>
 </footer>
 

@@ -10,7 +10,7 @@ editor_options:
 
 eBird data are collected and organized around the concept of a checklist, representing observations from a single birding event, such as a 1 km walk through a park or 15 minutes observing bird feeders in your backyard. All eBird checklists contains a list of species observed and the location and time of the observations. For a subset of checklists, the observer will also provide counts of the number of individuals seen of each species, specify the amount of effort expended while collecting these data, and confirm that they are submitting a complete checklist of all the birds they were able to identify. The data provided by the checklists such as these is often referred to as **semi-structured citizen science data**.
 
-Let's compare two eBird checklists: an [incidental observation with missing counts](https://ebird.org/checklist/S136805959)  and a [complete traveling count](https://ebird.org/checklist/S136805666). Both checklists can be useful, but only the second checklist provides the type of semi-structured data required for more rigorous applications.
+Let's compare two eBird checklists: an [incidental observation with missing counts](https://ebird.org/checklist/S136805959) and a [complete traveling count](https://ebird.org/checklist/S136805666). Both checklists can be useful, but only the second checklist provides the type of semi-structured data required for more rigorous applications.
 
 This lesson will focus on the eBird Reference Dataset (ERD), the collection of semi-structured eBird data used by the eBird Status and Trends team for modeling species distributions and relative abundance. A subset of this dataset for Chile was provided in the data package for this workshop. In the following sections we'll provide an introduction to the ERD, describe the associated prediction grid used to make predictions across space, and highlight some of the challenges associated with using eBird data for analysis.
 
@@ -18,7 +18,7 @@ This lesson will focus on the eBird Reference Dataset (ERD), the collection of s
 
 The eBird Reference Dataset (ERD) is a subset of the full eBird database created annually for Status and Trends modeling. Only semi-structured (complete checklists with effort information) traveling and stationary counts from the last 15 years are included in the ERD and we assign a set of environmental variables assigned to checklist.
 
-::: {.callout-tip}
+::: callout-tip
 ## Tip
 
 This workshop will only cover the eBird Reference Dataset (ERD). For access to the full eBird dataset updated monthly, you'll need to work with the [eBird Basic Dataset (EBD)](https://science.ebird.org/en/use-ebird-data/download-ebird-data-products). For details on working with the EBD consult the [eBird Best Practices book](https://ebird.github.io/ebird-best-practices). Some of the advantages and disadvantages of the two datasts are:
@@ -29,11 +29,11 @@ knitr::kable(readr::read_csv("data-raw/erd-ebd-comparison.csv"), escape = FALSE)
 ```
 :::
 
-The ERD is distributed in two parts: observation data and checklist data. In the observation dataset, each row corresponds to the sighting of a single species on a checklist, including the count and any other species-level information. In the checklist dataset, each row corresponds to a checklist, including the date, time, location, effort (e.g. distance traveled, time spent, etc.), and any additional checklist-level information. 
+The ERD is distributed in two parts: observation data and checklist data. In the observation dataset, each row corresponds to the sighting of a single species on a checklist, including the count and any other species-level information. In the checklist dataset, each row corresponds to a checklist, including the date, time, location, effort (e.g. distance traveled, time spent, etc.), and any additional checklist-level information.
 
 For this workshop, and extract of the ERD is provided for Chile in the workshop data package. The observations and checklsits datasets are provided in [parquet format](https://parquet.apache.org/), an open source standard for efficient storage and retrieval of tabular data. If you haven't already done so, following the [instructions in the Introduction](#sec-intro-setup) to create an RStudio project and download the workshop data package. The parquet files should be located at:
 
-```
+```         
 data/ebird_observations_chile_2021.parquet
 data/ebird_checklists_chile_2021.parquet
 ```
@@ -56,7 +56,7 @@ glimpse(checklists)
 
 There are a huge number of columns in this data frame. The first set of variables provide standard information about the checklist: where and when did the observation occur, what type of search was conducted, and how much search effort was expended. Two important differences exist between these variables and what you will see if you look at the raw eBird dataset: when a GPS track is available we replace the checklist or hotspot location (latitude/longitude) with the centroid of the track and the time of the checklist is expressed as the difference between the checklist midpoint and solar noon, a more ecologically meaningful quantity.
 
-All the remaining variables are not collected in eBird, they're calculated and added by the Status and Trends team based on external data sets. First, those variables beginning with `cds_`, provides information about the weather at the time of the observation, which can impact detectibility. This is followed by a large suite of environmental variables summarized over a 3km diameter circular neighborhood around the checklist location, including variables describing: elevation and topography, land and water cover, roads, and night time lights (a proxy for urban development). Most variables are summarized as two quantities expressing composition (what habitat is available) and configuration (how that habitat is arranged spatially). For continuous variables, such as elevation, we use the median and standard deviation. For categorical variables, such as land cover class, we use percent landcover (`pland`) and edge density (`ed`). 
+All the remaining variables are not collected in eBird, they're calculated and added by the Status and Trends team based on external data sets. First, those variables beginning with `cds_`, provides information about the weather at the time of the observation, which can impact detectibility. This is followed by a large suite of environmental variables summarized over a 3km diameter circular neighborhood around the checklist location, including variables describing: elevation and topography, land and water cover, roads, and night time lights (a proxy for urban development). Most variables are summarized as two quantities expressing composition (what habitat is available) and configuration (how that habitat is arranged spatially). For continuous variables, such as elevation, we use the median and standard deviation. For categorical variables, such as land cover class, we use percent landcover (`pland`) and edge density (`ed`).
 
 ![Example of calculating percent land cover and edge density for a 3km diamter circular neighborhood centered on a checklist location. `pland` for each class is the percent of the circle covered by that class. To calculate `ed` for each class, we add up the perimeter lengths of all patches of that class, then divide by the area of the circle.](images/landscape-metrics.png)
 
@@ -68,7 +68,7 @@ filter(ebirdst_predictors, predictor == "mcd12q1_lccs1_fs_c12_1500_pland") %>%
   select(predictor, predictor_label)
 ```
 
-::: {.callout-important}
+::: callout-important
 ## Checkpoint
 
 Take some time to explore the variables in the checklist dataset. Try looking up a variable in `ebirst_predictors`. Ask for help if you need clarification on the meaning of any of the variables.
@@ -84,16 +84,16 @@ glimpse(observations)
 
 This is a much simpler dataset with only five columns:
 
-- `checklist_id`: unique identifier for the checklist that this observation belongs to. Allows joining the observation data to the checklist data.
-- `species_code`: unique identifier for the species that this observation was made for.
-- `valid`: a binary variable indicating is the observation was determined to be valid (`TRUE`) or invalid (`FALSE`) by the eBird reviewers.
-- `obs_detected`: a binary variable indicating if the species was detected (1) or not detected (0). Since this is a dataset of observations only, `obs_detected` is always 1; however, having this variable will become useful when we join to the checklist dataset in the next section.
-- `obs_count`: count of the number of individuals or an `NA` if no count was provided (if an "X" was entered for count on the eBird checklist).
+-   `checklist_id`: unique identifier for the checklist that this observation belongs to. Allows joining the observation data to the checklist data.
+-   `species_code`: unique identifier for the species that this observation was made for.
+-   `valid`: a binary variable indicating is the observation was determined to be valid (`TRUE`) or invalid (`FALSE`) by the eBird reviewers.
+-   `obs_detected`: a binary variable indicating if the species was detected (1) or not detected (0). Since this is a dataset of observations only, `obs_detected` is always 1; however, having this variable will become useful when we join to the checklist dataset in the next section.
+-   `obs_count`: count of the number of individuals or an `NA` if no count was provided (if an "X" was entered for count on the eBird checklist).
 
-::: {.callout-tip}
+::: callout-tip
 ## Tip
 
-To look up the common name or scientific name of a species try appending the species code to the URL `https://ebird.org/species/`. For example, visit [https://ebird.org/species/eardov1](https://ebird.org/species/eardov1) to look up the species code `eardov1`. This information is also available in the `ebird_taxonomy` data frame in the `auk` package.
+To look up the common name or scientific name of a species try appending the species code to the URL `https://ebird.org/species/`. For example, visit <https://ebird.org/species/eardov1> to look up the species code `eardov1`. This information is also available in the `ebird_taxonomy` data frame in the `auk` package.
 
 ```{r}
 #| label: ebird-erd-species
@@ -193,13 +193,13 @@ par(new = TRUE, mar = c(0, 0, 3, 0))
 title("Chucao Tapaculo eBird Observations\nJune 2007-2021")
 ```
 
-::: {.callout-caution icon=false}
+::: {.callout-caution icon="false"}
 ## Exercise
 
 Try producing zero-filled, detection/non-detection data for another species.
 :::
 
-::: {.callout-note icon=false collapse="true"}
+::: {.callout-note icon="false" collapse="true"}
 ## Solution
 
 For example, to produce detection/non-detection data for [Thorn-tailed Rayadito](https://ebird.org/species/thtray1) use:
@@ -219,7 +219,7 @@ head(thtray1_zf)
 
 ## Prediction grid {#sec-ebird-pred}
 
-The ultimate goal of modeling the occurrence or abundance of a species is frequently to produce a map showing the distribution of that species in space. To do so, we need to know the values of our predictor variables over the region that we intend to make predictions. To make this possible, the ERD is distributed with a **prediction grid**: a regular grid of points covering the entire globe spaced 3km apart for which all the environmental variables have been calculated for the year 2021. Internally, we often refer to this prediction grid as the Spatial Reference Dataset (SRD). 
+The ultimate goal of modeling the occurrence or abundance of a species is frequently to produce a map showing the distribution of that species in space. To do so, we need to know the values of our predictor variables over the region that we intend to make predictions. To make this possible, the ERD is distributed with a **prediction grid**: a regular grid of points covering the entire globe spaced 3km apart for which all the environmental variables have been calculated for the year 2021. Internally, we often refer to this prediction grid as the Spatial Reference Dataset (SRD).
 
 The data package for this course contains a subset of the prediction grid for Chile. The file `data/ebird_prediction-grid_chile_2021.parquet` contains the environmental variables for each point on the grid and the file `data/prediction-grid_template.tif` is a 3km by 3km raster template where each each cell center is a point on the prediction grid. Let's start by examining the environmental variables.
 
@@ -287,7 +287,6 @@ mean(chutap1_zf$obs_detected)
 ```
 
 To address these three issues (spatial bias, temporal bias, and class imbalance) we recommend subsampling the data using a technique called **case controlled grid sampling**. We overlay an equal area 3km by 3km grid over the checklists, then sample one detection and one non-detection from each grid cell for each week of each year. Let's look at a simple example of how spatial grid sampling works."
-
 
 ![1. Take one week of eBird observations. Detections are show in [**green**]{style="color:#4daf4a"} and non-detections are shown in [**gray**]{style="color:#555555"}.](images/grid-sampling_1.png)
 
