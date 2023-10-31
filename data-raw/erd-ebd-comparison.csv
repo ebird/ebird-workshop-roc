@@ -1,0 +1,5 @@
+eBird Reference Dataset (ERD),eBird Basic Dataset (EBD)
+contains only complete traveling and stationary counts from the last 15 years,contains all eBird observations except for sensitive species
+updated annually,updated monthly
+environmental variables assigned to checklists,"complete set of variables from the eBird database including checklist comments, species comments, breeding codes, etc."
+format is easier to work with in R,

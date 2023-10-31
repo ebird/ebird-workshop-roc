@@ -3,7 +3,6 @@
 .RData
 .Ruserdata
 data/
-data-raw/
 
 /.quarto/
 .Rdata
